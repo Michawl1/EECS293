@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Scanner;
 
 public class Assignment1 {
 	
@@ -17,6 +18,7 @@ public class Assignment1 {
 	 * @brief The main method of the program
 	 */
 	public static void main(String[] args) {
+		/*
 		List<Integer> a = Arrays.asList(1, 2, 2, 3);
 		List<Integer> b = Arrays.asList(1, 2, 3);
 		Comparator<Integer> comp = new Comparator<Integer>() {
@@ -25,7 +27,24 @@ public class Assignment1 {
 				return Integer.compare(e1, e2);
 			}
 		};
+		*/
 		
+		Scanner inputObj = new Scanner(System.in);
+		
+		System.out.println("Enter 2 strings with each word seperated by a space");
+		
+		String ina = inputObj.nextLine();
+		String inb = inputObj.nextLine();
+		
+		Comparator <String> comp = new Comparator<String>() {
+			@Override
+			public int compare(String e1, String e2) {
+				return e1.compareTo(e2);
+			}
+		};
+		
+		List<String> a = Arrays.asList(ina.split(" "));
+		List<String> b = Arrays.asList(inb.split(" "));
 		
 		System.out.println(longestSmallerPrefix(a, b, comp));
 		
