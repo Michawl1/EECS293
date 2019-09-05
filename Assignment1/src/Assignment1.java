@@ -18,17 +18,6 @@ public class Assignment1 {
 	 * @brief The main method of the program
 	 */
 	public static void main(String[] args) {
-		/*
-		List<Integer> a = Arrays.asList(1, 2, 2, 3);
-		List<Integer> b = Arrays.asList(1, 2, 3);
-		Comparator<Integer> comp = new Comparator<Integer>() {
-			@Override
-			public int compare(Integer e1, Integer e2){
-				return Integer.compare(e1, e2);
-			}
-		};
-		*/
-		
 		Scanner inputObj = new Scanner(System.in);
 		
 		System.out.println("Enter 2 strings with each word seperated by a space");
