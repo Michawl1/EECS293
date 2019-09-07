@@ -37,6 +37,7 @@ public final class Leg
 	 * @brief Builder method for @Leg class
 	 * @param[in] _origin: the origin used for the leg
 	 * @param[in] _destination: the destination used for the leg
+	 * @returns A constructed Leg object
 	 */
 	public static final Leg of(
 			Airport _origin,
