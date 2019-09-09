@@ -7,6 +7,7 @@
 
 package airtravel;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
 public final class FlightSchedule 
@@ -76,5 +77,16 @@ public final class FlightSchedule
 	public LocalTime getArrivalTime()
 	{
 		return m_arrivalTime;
+	}
+	
+	/*
+	 * @brief tells whether the flight is shorter than or equal to the given duration
+	 * @param[in] _durationMax: the max duration of the flight
+	 * @returns true if _durationMax is shorter than
+	 * 			false if _durationMax is equal to
+	 */
+	public final boolean isShort(Duration _durationMax)
+	{
+		return false;
 	}
 }
