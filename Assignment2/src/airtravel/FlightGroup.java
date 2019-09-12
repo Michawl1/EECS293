@@ -70,7 +70,7 @@ public final class FlightGroup
 		{
 			return true;
 		}
-		else
+		else //TODO check origin match
 		{
 			throw new IllegalArgumentException("Flight " + _flight.getCode() + 
 					" already exists in the system");
@@ -83,20 +83,22 @@ public final class FlightGroup
 	 */
 	public final boolean remove(Flight _flight)
 	{
+		//you can clean this up a lot
 		if(m_flights.remove(_flight.departureTime(), _flight) == true)
 		{
 			return true;
 		}
-		else
+		else //TODO check origin match
 		{
 			throw new IllegalArgumentException("Flight " + _flight.getCode() + 
 					" does not originate from " + m_origin.getCode());
 		}
 	}
 	
-	
+	//TODO finish this
 	public final Set<Flight> flightsAtOrAfter(LocalTime _departureTime)
 	{
+		//TODO find out if Hash has something going on
 		Set<Flight> afterSet = new HashSet<Flight>();
 		afterSet.addAll(m_flights.get(_departureTime));
 		

@@ -37,6 +37,7 @@ class Airport_Test {
 		
 	
 		assertEquals(true, test.addFlight(testFlight));
+		
 	}
 
 }

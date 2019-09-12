@@ -91,6 +91,7 @@ public final class FlightSchedule
 		
 		int result = _durationMax.compareTo(totalDuration);
 		
+		//TODO Fix this
 		return result < 0;
 	}
 }

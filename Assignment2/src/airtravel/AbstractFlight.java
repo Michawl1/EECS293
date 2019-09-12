@@ -13,15 +13,6 @@ import java.time.LocalTime;
 public abstract class AbstractFlight implements Flight
 {
 
-	/*
-	 * @brief Default Constructor
-	 * @returns This method performs an action and does not return a value
-	 */
-	public AbstractFlight() 
-	{
-		
-	}
-
 	public abstract String getCode();
 	
 	public abstract Leg getLeg();

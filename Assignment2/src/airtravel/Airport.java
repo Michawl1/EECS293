@@ -133,6 +133,7 @@ public final class Airport implements Comparable<Airport>
 	@Override
 	public int hashCode()
 	{
+		//TODO fix this
 		return Integer.parseInt(m_code);
 	}
 	
