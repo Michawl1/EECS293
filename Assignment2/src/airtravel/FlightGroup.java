@@ -101,9 +101,5 @@ public final class FlightGroup
 		afterSet.addAll(m_flights.get(_departureTime));
 		
 		return null;
-	}
-	
-	
-	
-	
+	}	
 }

@@ -36,12 +36,11 @@ public final class Airport implements Comparable<Airport>
 	 */
 	private Airport(
 			String _code,
-			Duration _connectionTimeMin,
-			FlightGroup _outFlights) 
+			Duration _connectionTimeMin) 
 	{
 		m_code = _code;
 		m_connectionTimeMin = _connectionTimeMin;
-		m_outFlights = _outFlights;
+		m_outFlights = FlightGroup.of(this);
 	}
 	
 	/*
@@ -52,16 +51,15 @@ public final class Airport implements Comparable<Airport>
 	 */
 	public static final Airport of(
 			String _code,
-			Duration _connectionTimeMin,
-			FlightGroup _outFlights) 
+			Duration _connectionTimeMin) 
 	{	
-		if(_code == null || _connectionTimeMin == null || _outFlights == null)
+		if(_code == null || _connectionTimeMin == null)
 		{
 			throw new NullPointerException("Parameters cannot be null");
 		}
 		else
 		{
-			return new Airport(_code, _connectionTimeMin, _outFlights);
+			return new Airport(_code, _connectionTimeMin);
 		}
 	}
 	
@@ -92,7 +90,6 @@ public final class Airport implements Comparable<Airport>
 	{
 		return m_outFlights.add(_flight);
 	}
-	
 	
 	/*
 	 * @brief removes a flight from the flight group
