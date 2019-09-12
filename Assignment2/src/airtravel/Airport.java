@@ -24,6 +24,11 @@ public final class Airport implements Comparable<Airport>
 	private final Duration m_connectionTimeMin;
 	
 	/*
+	 * @brief Group manager for flights
+	 */
+	private final FlightGroup m_outFlights;
+	
+	/*
 	 * @brief Private constructor
 	 * @param[in] _code: the code used for the airport
 	 * @param[in] _connectionTimeMin: connection time or reservation time
@@ -31,10 +36,12 @@ public final class Airport implements Comparable<Airport>
 	 */
 	private Airport(
 			String _code,
-			Duration _connectionTimeMin) 
+			Duration _connectionTimeMin,
+			FlightGroup _outFlights) 
 	{
 		m_code = _code;
 		m_connectionTimeMin = _connectionTimeMin;
+		m_outFlights = _outFlights;
 	}
 	
 	/*
@@ -45,15 +52,16 @@ public final class Airport implements Comparable<Airport>
 	 */
 	public static final Airport of(
 			String _code,
-			Duration _connectionTimeMin) 
+			Duration _connectionTimeMin,
+			FlightGroup _outFlights) 
 	{	
-		if(_code == null || _connectionTimeMin == null)
+		if(_code == null || _connectionTimeMin == null || _outFlights == null)
 		{
 			throw new NullPointerException("Parameters cannot be null");
 		}
 		else
 		{
-			return new Airport(_code, _connectionTimeMin);
+			return new Airport(_code, _connectionTimeMin, _outFlights);
 		}
 	}
 	
@@ -73,6 +81,27 @@ public final class Airport implements Comparable<Airport>
 	public Duration getConnectionTimeMin()
 	{
 		return this.m_connectionTimeMin;
+	}
+	
+	/*
+	 * @brief adds a flight to the flight group
+	 * @returns false if it failed to add flight
+	 * 			true if the succeeded in adding the flight
+	 */
+	public boolean addFlight(Flight _flight)
+	{
+		return m_outFlights.add(_flight);
+	}
+	
+	
+	/*
+	 * @brief removes a flight from the flight group
+	 * @returns false if it failed to remove flight
+	 * 				  true if it succeeded in removing the flight
+	 */
+	public boolean removeFlight(Flight _flight)
+	{
+		return m_outFlights.remove(_flight);
 	}
 
 	/*

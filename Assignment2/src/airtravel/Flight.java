@@ -1,5 +1,5 @@
 /*******************************************************************************
- * @file 	Leg.java
+ * @file 	Flight.java
  * @author 	Michael Thompson (mjt106)
  * @date 	9/8/2019
  * @details	This file outlines the Flight Interface
@@ -7,6 +7,7 @@
 
 package airtravel;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
 public interface Flight 
@@ -25,5 +26,5 @@ public interface Flight
 	
 	public LocalTime arrivalTime();
 	
-	public boolean isShort();
+	public boolean isShort(Duration _durationMax);
 }

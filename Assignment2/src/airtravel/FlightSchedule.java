@@ -87,6 +87,10 @@ public final class FlightSchedule
 	 */
 	public final boolean isShort(Duration _durationMax)
 	{
-		return false;
+		Duration totalDuration = Duration.between(m_departureTime, m_arrivalTime);
+		
+		int result = _durationMax.compareTo(totalDuration);
+		
+		return result < 0;
 	}
 }

@@ -1,13 +1,11 @@
 /*******************************************************************************
- * @file 	Leg.java
+ * @file 	SimpleFlight.java
  * @author 	Michael Thompson (mjt106)
  * @date 	9/8/2019
  * @details	This file outlines the Simple Flight class
  ******************************************************************************/
 
 package airtravel;
-
-import java.time.LocalTime;
 
 public final class SimpleFlight extends AbstractFlight
 {
@@ -19,7 +17,7 @@ public final class SimpleFlight extends AbstractFlight
 	private final FlightSchedule m_flightSchedule;
 	
 	/*
-	 * @brief Private contsructor
+	 * @brief Private constructor
 	 * @param[in] _code: the code of the airport
 	 * @param[in] _leg: the leg for the flight
 	 * @param[in] _flightSchedule: the schedule for that flight
@@ -85,36 +83,6 @@ public final class SimpleFlight extends AbstractFlight
 	public FlightSchedule getFlightSchedule()
 	{
 		return m_flightSchedule;
-	}
-
-	@Override
-	public Airport origin() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Airport destination() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public LocalTime departureTime() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public LocalTime arrivalTime() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isShort() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }
