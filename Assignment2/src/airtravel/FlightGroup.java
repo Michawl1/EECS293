@@ -62,7 +62,7 @@ public final class FlightGroup
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
 		
-		if(_flight.getLeg().getOrigin() != m_origin)
+		if(!_flight.getLeg().getOrigin().equals(m_origin))
 		{
 			throw new IllegalArgumentException("Flight " + _flight.getCode() + 
 					" does not originate from " + m_origin.getCode());
@@ -100,7 +100,11 @@ public final class FlightGroup
 					" does not originate from " + m_origin.getCode());
 		}
 		
-		return m_flights.remove(_flight.departureTime(), _flight);
+
+		Set<Flight> flightSet = new HashSet<Flight>();
+		flightSet.add(_flight);
+		
+		return m_flights.remove(_flight.departureTime(), flightSet);
 	}
 	
 	/*
@@ -117,7 +121,7 @@ public final class FlightGroup
 		{
 			for(Flight f : v)
 			{
-				if(f.departureTime().isAfter(_departureTime))
+				if(f.departureTime().isAfter(_departureTime) || f.departureTime().equals(_departureTime))
 				{
 					afterSet.add(f);
 				}

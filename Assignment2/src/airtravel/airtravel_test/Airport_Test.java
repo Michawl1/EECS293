@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import airtravel.*;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 class Airport_Test {
 	
@@ -43,6 +45,8 @@ class Airport_Test {
 	static Flight t_flight2;
 	static Flight t_flight3;
 	static Flight t_flight4;
+	static Flight t_flight5;
+	static Flight t_flight6;
 	
 	static FlightGroup t_group1;
 	static FlightGroup t_group2;
@@ -84,8 +88,9 @@ class Airport_Test {
 		
 		t_flight1 = SimpleFlight.of(t_code1, t_leg1, t_schedule1);
 		t_flight2 = SimpleFlight.of(t_code1, t_leg2, t_schedule2);
-		t_flight3 = SimpleFlight.of(t_code2, t_leg3, t_schedule3);
+		t_flight3 = SimpleFlight.of(t_code1, t_leg3, t_schedule3);
 		t_flight4 = SimpleFlight.of(t_code2, t_leg4, t_schedule4);
+		t_flight5 = SimpleFlight.of(t_code1, t_leg2, t_schedule4);
 		
 		t_group1 = FlightGroup.of(t_airport1);
 		t_group2 = FlightGroup.of(t_airport2);
@@ -105,6 +110,7 @@ class Airport_Test {
 		assertEquals(false, t_group1.add(t_flight1));
 		SimpleFlight temp = SimpleFlight.of(t_code1, t_leg2, t_schedule2);
 		assertEquals(false, t_group1.add(temp));
+		assertEquals(false, t_group1.add(t_flight2));
 		
 	}
 	
@@ -113,7 +119,34 @@ class Airport_Test {
 	{
 		testCreate();
 		
+		assertThrows(NullPointerException.class, () -> {t_group1.remove(null); });
+		assertThrows(IllegalArgumentException.class, () -> {t_group1.remove(t_flight4); });
 		
+		t_group1.add(t_flight1);
+		t_group1.add(t_flight2);
+		t_group1.add(t_flight3);
+		
+		assertEquals(true, t_group1.remove(t_flight1));
+		assertEquals(false, t_group1.remove(t_flight1));
+	}
+	
+	@Test 
+	void flightGroup_flightsAtOrAfterTest()
+	{
+		testCreate();
+		
+		assertThrows(NullPointerException.class, () -> {t_group1.flightsAtOrAfter(null); });
+		
+		t_group1.add(t_flight1);
+		t_group1.add(t_flight2);
+		t_group1.add(t_flight3);
+		t_group1.add(t_flight5);
+		
+		Set<Flight> returnSet = new HashSet<Flight>();
+
+		returnSet.add(t_flight5);
+		
+		assertEquals(returnSet, t_group1.flightsAtOrAfter(t_time2));
 	}
 	
 	@Test 
