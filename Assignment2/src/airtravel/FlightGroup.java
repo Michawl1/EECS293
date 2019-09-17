@@ -10,6 +10,7 @@ package airtravel;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.NavigableMap;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -39,14 +40,9 @@ public final class FlightGroup
 	public static final FlightGroup of(
 			Airport _origin)
 	{
-		if(_origin == null)
-		{
-			throw new NullPointerException("Paramters cannot be null");
-		}
-		else
-		{
-			return new FlightGroup(_origin);
-		}
+		_origin = Objects.requireNonNull(_origin, "Parameter cannot be null");
+
+		return new FlightGroup(_origin);	
 	}
 	
 	/*
@@ -64,17 +60,30 @@ public final class FlightGroup
 	 */
 	public final boolean add(Flight _flight)
 	{
-		Set<Flight> flightSet = new HashSet<Flight>();
-		flightSet.add(_flight);
-		if(m_flights.put(_flight.departureTime(), flightSet) == null)
-		{
-			return true;
-		}
-		else //TODO check origin match
+		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
+		
+		if(_flight.getLeg().getOrigin() != m_origin)
 		{
 			throw new IllegalArgumentException("Flight " + _flight.getCode() + 
-					" already exists in the system");
+					" does not originate from " + m_origin.getCode());
 		}
+		
+		Set<Flight> flightSet = new HashSet<Flight>();
+		
+		//checks to see if there is a flight that already departs from the airport
+		for(Set<Flight> v : m_flights.values())
+		{
+			for(Flight f : v)
+			{
+				if(f.departureTime().equals(_flight.departureTime()))
+				{
+					return false;
+				}
+			}
+		}
+		
+		flightSet.add(_flight);
+		return m_flights.put(_flight.departureTime(), flightSet) == null;
 	}
 	
 	/*
@@ -83,25 +92,38 @@ public final class FlightGroup
 	 */
 	public final boolean remove(Flight _flight)
 	{
-		//you can clean this up a lot
-		if(m_flights.remove(_flight.departureTime(), _flight) == true)
-		{
-			return true;
-		}
-		else //TODO check origin match
+		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
+		
+		if(_flight.getLeg().getOrigin() != m_origin)
 		{
 			throw new IllegalArgumentException("Flight " + _flight.getCode() + 
 					" does not originate from " + m_origin.getCode());
 		}
+		
+		return m_flights.remove(_flight.departureTime(), _flight);
 	}
 	
-	//TODO finish this
+	/*
+	 * @brief finds flights after a time
+	 * @returns A set of all flights that are after @_departureTime
+	 */
 	public final Set<Flight> flightsAtOrAfter(LocalTime _departureTime)
 	{
-		//TODO find out if Hash has something going on
-		Set<Flight> afterSet = new HashSet<Flight>();
-		afterSet.addAll(m_flights.get(_departureTime));
+		_departureTime = Objects.requireNonNull(_departureTime, "Parameter cannot be null");
 		
-		return null;
+		Set<Flight> afterSet = new HashSet<Flight>();
+		
+		for(Set<Flight> v : m_flights.values())
+		{
+			for(Flight f : v)
+			{
+				if(f.departureTime().isAfter(_departureTime))
+				{
+					afterSet.add(f);
+				}
+			}
+		}
+		
+		return afterSet;
 	}	
 }

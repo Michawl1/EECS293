@@ -7,6 +7,8 @@
 
 package airtravel;
 
+import java.util.Objects;
+
 public final class Leg 
 {
 	/*
@@ -43,14 +45,10 @@ public final class Leg
 			Airport _origin,
 			Airport _destination)
 	{
-		if(_origin == null || _destination == null)
-		{
-			throw new NullPointerException("Parameters cannot be null");
-		}
-		else
-		{
-			return new Leg(_origin, _destination);
-		}
+		_origin = Objects.requireNonNull(_origin, "Parameter _origin cannot be null");
+		_destination = Objects.requireNonNull(_destination, "Parameter _destination cannot be null");
+		
+		return new Leg(_origin, _destination);
 	}
 	
 	/*

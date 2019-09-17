@@ -8,6 +8,7 @@
 package airtravel;
 
 import java.time.Duration;
+import java.util.Objects;
 
 public final class Airport implements Comparable<Airport> 
 {
@@ -53,14 +54,10 @@ public final class Airport implements Comparable<Airport>
 			String _code,
 			Duration _connectionTimeMin) 
 	{	
-		if(_code == null || _connectionTimeMin == null)
-		{
-			throw new NullPointerException("Parameters cannot be null");
-		}
-		else
-		{
-			return new Airport(_code, _connectionTimeMin);
-		}
+		_code = Objects.requireNonNull(_code, "Parameter _code cannot be null");
+		_connectionTimeMin = Objects.requireNonNull(_connectionTimeMin, "Parameter _connectionTimeMIn cannot be null");
+
+		return new Airport(_code, _connectionTimeMin);
 	}
 	
 	/*
@@ -88,6 +85,7 @@ public final class Airport implements Comparable<Airport>
 	 */
 	public boolean addFlight(Flight _flight)
 	{
+		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
 		return m_outFlights.add(_flight);
 	}
 	
@@ -98,6 +96,7 @@ public final class Airport implements Comparable<Airport>
 	 */
 	public boolean removeFlight(Flight _flight)
 	{
+		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
 		return m_outFlights.remove(_flight);
 	}
 
@@ -123,6 +122,11 @@ public final class Airport implements Comparable<Airport>
 	@Override
 	public boolean equals(Object o)
 	{
+		if(!(o instanceof Airport))
+		{
+			return false;
+		}
+		
 		return m_code.equals(((Airport)o).getCode());
 	}
 	
@@ -133,8 +137,7 @@ public final class Airport implements Comparable<Airport>
 	@Override
 	public int hashCode()
 	{
-		//TODO fix this
-		return Integer.parseInt(m_code);
+		return m_code.hashCode();
 	}
 	
 	/*

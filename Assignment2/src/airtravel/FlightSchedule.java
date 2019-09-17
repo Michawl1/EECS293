@@ -9,6 +9,7 @@ package airtravel;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public final class FlightSchedule 
 {
@@ -46,19 +47,15 @@ public final class FlightSchedule
 			LocalTime _departureTime,
 			LocalTime _arrivalTime)
 	{
-		if(_departureTime == null || _arrivalTime == null)
+		_departureTime = Objects.requireNonNull(_departureTime, "Parameter _depatureTime cannot be null");
+		_arrivalTime = Objects.requireNonNull(_arrivalTime, "Paramter _arrivalTime cannot be null");
+		
+		if(_arrivalTime.isBefore(_departureTime))
 		{
-			throw new NullPointerException("Parameters cannot be null");
+			throw new IllegalArgumentException("departure time must preceed " + "arrival time");
 		}
-		else if(_arrivalTime.isBefore(_departureTime))
-		{
-			throw new IllegalArgumentException("departure time must preceed "
-					+ "arrival time");
-		}
-		else
-		{
-			return new FlightSchedule(_departureTime, _arrivalTime);
-		}
+		
+		return new FlightSchedule(_departureTime, _arrivalTime);
 	}
 	
 	/*
@@ -82,16 +79,15 @@ public final class FlightSchedule
 	/*
 	 * @brief tells whether the flight is shorter than or equal to the given duration
 	 * @param[in] _durationMax: the max duration of the flight
-	 * @returns true if _durationMax is shorter than
-	 * 			false if _durationMax is equal to
+	 * @returns true if _durationMax is shorter than equal current duration
+	 * 			false if _durationMax is longer than current duration
 	 */
 	public final boolean isShort(Duration _durationMax)
 	{
+		_durationMax = Objects.requireNonNull(_durationMax, "Paramter cannot be null");
+		
 		Duration totalDuration = Duration.between(m_departureTime, m_arrivalTime);
 		
-		int result = _durationMax.compareTo(totalDuration);
-		
-		//TODO Fix this
-		return result < 0;
+		return _durationMax.compareTo(totalDuration) < 0;
 	}
 }

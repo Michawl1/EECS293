@@ -7,6 +7,8 @@
 
 package airtravel;
 
+import java.util.Objects;
+
 public final class SimpleFlight extends AbstractFlight
 {
 	
@@ -45,14 +47,15 @@ public final class SimpleFlight extends AbstractFlight
 			Leg _leg,
 			FlightSchedule _flightSchedule)
 	{
-		if(_code == null || _leg == null || _flightSchedule == null)
-		{
-			throw new NullPointerException("Parameters cannot be null");
-		}
-		else
-		{
-			return new SimpleFlight(_code, _leg, _flightSchedule);
-		}
+		_code = Objects.requireNonNull(_code, "Parameter _code cannot be null");
+		_leg = Objects.requireNonNull(_leg, "Parameter _leg cannot be null");
+		_flightSchedule = Objects.requireNonNull(_flightSchedule, "Parameter _flightSchedule cannot be null");
+		
+		SimpleFlight temp = new SimpleFlight(_code, _leg, _flightSchedule);
+		
+		_leg.getOrigin().addFlight(temp);
+	
+		return temp;	
 	}
 	
 	/*
