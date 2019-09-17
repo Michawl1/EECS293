@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.BiFunction;
 
 class Airport_Test {
 	
@@ -66,6 +67,22 @@ class Airport_Test {
 	static SeatConfiguration t_config4;
 	static SeatConfiguration t_config5;
 	
+	static FareClass t_fare1;
+	static FareClass t_fare2;
+	static FareClass t_fare3;
+	static FareClass t_fare4;
+	
+	static FlightPolicy t_policy1;
+	static FlightPolicy t_policy2;
+	static FlightPolicy t_policy3;
+	static FlightPolicy t_policy4;
+	
+	static BiFunction<SeatConfiguration, FareClass, SeatConfiguration> t_bifunction1;
+	static BiFunction<SeatConfiguration, FareClass, SeatConfiguration> t_bifunction2;
+	static BiFunction<SeatConfiguration, FareClass, SeatConfiguration> t_bifunction3;
+	static BiFunction<SeatConfiguration, FareClass, SeatConfiguration> t_bifunction4;
+	
+	
 	//initializes a bunch of objects for testing
 	public void testCreate()
 	{
@@ -107,11 +124,11 @@ class Airport_Test {
 		
 		for(SeatClass v : SeatClass.values())
 		{
-			t_seats1.put(v, new Integer(1));
-			t_seats2.put(v, new Integer(2));
-			t_seats3.put(v, new Integer(3));
-			t_seats4.put(v, new Integer(4));
-			t_seats5.put(v, new Integer(5));
+			t_seats1.put(v, new Integer(0));
+			t_seats2.put(v, new Integer(1));
+			t_seats3.put(v, new Integer(2));
+			t_seats4.put(v, new Integer(3));
+			t_seats5.put(v, new Integer(4));
 		}
 		
 		t_config1 = SeatConfiguration.of(t_seats1);
@@ -130,6 +147,21 @@ class Airport_Test {
 		t_group2 = FlightGroup.of(t_airport2);
 		t_group3 = FlightGroup.of(t_airport3);
 		t_group4 = FlightGroup.of(t_airport4);
+		
+		t_fare1 = FareClass.of(1, SeatClass.BUSINESS);
+		t_fare2 = FareClass.of(2, SeatClass.BUSINESS);
+		t_fare3 = FareClass.of(1, SeatClass.ECONOMY);
+		t_fare4 = FareClass.of(2, SeatClass.ECONOMY);
+		
+		t_bifunction1 = (a, b) -> FlightPolicy.strict(t_flight1).seatsAvailable(b);
+		t_bifunction2 = (a, b) -> FlightPolicy.restrictedDuration(t_flight1, t_duration1).seatsAvailable(b);
+		t_bifunction3 = (a, b) -> FlightPolicy.reserve(t_flight1, 2).seatsAvailable(b);
+		t_bifunction4 = (a, b) -> FlightPolicy.limited(t_flight1).seatsAvailable(b);
+		
+		t_policy1 = FlightPolicy.of(t_flight1, t_bifunction1);
+		t_policy2 = FlightPolicy.of(t_flight2, t_bifunction2);
+		t_policy3 = FlightPolicy.of(t_flight3, t_bifunction3);
+		t_policy4 = FlightPolicy.of(t_flight4, t_bifunction4);
 	}
 	
 	/*
@@ -210,13 +242,44 @@ class Airport_Test {
 	}
 	
 	@Test
+	void flightPolicy_strictTest()
+	{
+		testCreate();
+		
+		assertEquals(false, t_policy1.seatsAvailable(t_fare1).hasSeats());
+		FlightPolicy temp = FlightPolicy.of(t_flight2, t_bifunction1);
+		assertEquals(true, temp.seatsAvailable(t_fare1).hasSeats());
+
+		
+		System.out.println(FlightPolicy.strict(t_flight1).hasSeats(t_fare1));
+	}
+	
+	@Test
+	void flightPolicy_restrictedDurationTest()
+	{
+		
+	}
+	
+	@Test
+	void flightPolicy_reserveTest()
+	{
+		
+	}
+	
+	@Test
+	void flightPolicy_limitedTest()
+	{
+		
+	}
+	
+	@Test
 	void seatConfiguration_seatsTest()
 	{
 		testCreate();
 		
-		assertThrows(NullPointerException.class, () -> {t_config1.seats(null); });
+		assertThrows(NullPointerException.class, () -> {t_config2.seats(null); });
 		
-		assertEquals(new Integer(1), t_config1.seats(SeatClass.BUSINESS));
+		assertEquals(new Integer(1), t_config2.seats(SeatClass.BUSINESS));
 	}
 	
 	@Test
@@ -224,10 +287,10 @@ class Airport_Test {
 	{
 		testCreate();
 		
-		assertThrows(NullPointerException.class, () -> {t_config1.setSeats(null, 0); });
+		assertThrows(NullPointerException.class, () -> {t_config2.setSeats(null, 0); });
 		
-		assertEquals(1, t_config1.setSeats(SeatClass.BUSINESS, 5));
-		assertEquals(5, t_config1.seats(SeatClass.BUSINESS));
+		assertEquals(1, t_config2.setSeats(SeatClass.BUSINESS, 5));
+		assertEquals(5, t_config2.seats(SeatClass.BUSINESS));
 	}
 	
 	@Test
@@ -235,14 +298,14 @@ class Airport_Test {
 	{
 		testCreate();
 		
-		assertEquals(true, t_config1.hasSeats());
+		assertEquals(true, t_config2.hasSeats());
 		
 		for(SeatClass v : SeatClass.values())
 		{
-			t_config1.setSeats(v, 0);
+			t_config2.setSeats(v, 0);
 		}
 		
-		assertEquals(false, t_config1.hasSeats());
+		assertEquals(false, t_config2.hasSeats());
 	}
 	
 

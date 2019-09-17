@@ -41,6 +41,13 @@ public final class SeatConfiguration
 		return new SeatConfiguration(_seats);
 	}
 	
+	public static final SeatConfiguration of(
+			SeatConfiguration _seatConfig)
+	{
+		SeatConfiguration copy = _seatConfig;
+		return copy;
+	}
+	
 	/*
 	 * @param[in] _seatClass: a value of the @SeatClass enum used determine class
 	 * @returns the number of seats available in the given class

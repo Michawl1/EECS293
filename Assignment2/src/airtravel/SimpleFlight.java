@@ -106,5 +106,11 @@ public final class SimpleFlight extends AbstractFlight
 	{
 		return m_flightSchedule;
 	}
+	
+	@Override
+	public SeatConfiguration seatsAvailable(FareClass _fareClass)
+	{
+		return m_seatsAvailable;
+	}
 
 }

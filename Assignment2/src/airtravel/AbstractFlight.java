@@ -19,6 +19,8 @@ public abstract class AbstractFlight implements Flight
 	
 	public abstract FlightSchedule getFlightSchedule();
 	
+	public abstract SeatConfiguration seatsAvailable(FareClass _fareClass);
+	
 	public Airport origin()
 	{
 		return getLeg().getOrigin();
@@ -43,4 +45,10 @@ public abstract class AbstractFlight implements Flight
 	{		
 		return getFlightSchedule().isShort(_durationMax);
 	}
+	
+	public boolean hasSeats(FareClass _fareClass)
+	{
+		return seatsAvailable(_fareClass).hasSeats();
+	}
+	
 }

@@ -27,4 +27,8 @@ public interface Flight
 	public LocalTime arrivalTime();
 	
 	public boolean isShort(Duration _durationMax);
+	
+	public SeatConfiguration seatsAvailable(FareClass _fareClass);
+	
+	public boolean hasSeats(FareClass _fareClass);
 }
