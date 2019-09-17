@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import airtravel.*;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,6 +54,18 @@ class Airport_Test {
 	static FlightGroup t_group3;
 	static FlightGroup t_group4;
 	
+	static EnumMap<SeatClass, Integer> t_seats1;
+	static EnumMap<SeatClass, Integer> t_seats2;
+	static EnumMap<SeatClass, Integer> t_seats3;
+	static EnumMap<SeatClass, Integer> t_seats4;
+	static EnumMap<SeatClass, Integer> t_seats5;
+	
+	static SeatConfiguration t_config1;
+	static SeatConfiguration t_config2;
+	static SeatConfiguration t_config3;
+	static SeatConfiguration t_config4;
+	static SeatConfiguration t_config5;
+	
 	//initializes a bunch of objects for testing
 	public void testCreate()
 	{
@@ -84,18 +97,65 @@ class Airport_Test {
 		t_schedule1 = FlightSchedule.of(t_time1, t_time2);
 		t_schedule2 = FlightSchedule.of(t_time1, t_time3);
 		t_schedule3 = FlightSchedule.of(t_time1, t_time4);
-		t_schedule4 = FlightSchedule.of(t_time2, t_time4);	
+		t_schedule4 = FlightSchedule.of(t_time2, t_time4);
 		
-		t_flight1 = SimpleFlight.of(t_code1, t_leg1, t_schedule1);
-		t_flight2 = SimpleFlight.of(t_code1, t_leg2, t_schedule2);
-		t_flight3 = SimpleFlight.of(t_code1, t_leg3, t_schedule3);
-		t_flight4 = SimpleFlight.of(t_code2, t_leg4, t_schedule4);
-		t_flight5 = SimpleFlight.of(t_code1, t_leg2, t_schedule4);
+		t_seats1 = new EnumMap<SeatClass, Integer>(SeatClass.class);
+		t_seats2 = new EnumMap<SeatClass, Integer>(SeatClass.class);
+		t_seats3 = new EnumMap<SeatClass, Integer>(SeatClass.class);
+		t_seats4 = new EnumMap<SeatClass, Integer>(SeatClass.class);
+		t_seats5 = new EnumMap<SeatClass, Integer>(SeatClass.class);
+		
+		for(SeatClass v : SeatClass.values())
+		{
+			t_seats1.put(v, new Integer(1));
+			t_seats2.put(v, new Integer(2));
+			t_seats3.put(v, new Integer(3));
+			t_seats4.put(v, new Integer(4));
+			t_seats5.put(v, new Integer(5));
+		}
+		
+		t_config1 = SeatConfiguration.of(t_seats1);
+		t_config2 = SeatConfiguration.of(t_seats2);
+		t_config3 = SeatConfiguration.of(t_seats3);
+		t_config4 = SeatConfiguration.of(t_seats4);
+		t_config5 = SeatConfiguration.of(t_seats5);
+		
+		t_flight1 = SimpleFlight.of(t_code1, t_leg1, t_schedule1, t_config1);
+		t_flight2 = SimpleFlight.of(t_code1, t_leg2, t_schedule2, t_config2);
+		t_flight3 = SimpleFlight.of(t_code1, t_leg3, t_schedule3, t_config3);
+		t_flight4 = SimpleFlight.of(t_code2, t_leg4, t_schedule4, t_config4);
+		t_flight5 = SimpleFlight.of(t_code1, t_leg2, t_schedule4, t_config5);
 		
 		t_group1 = FlightGroup.of(t_airport1);
 		t_group2 = FlightGroup.of(t_airport2);
 		t_group3 = FlightGroup.of(t_airport3);
 		t_group4 = FlightGroup.of(t_airport4);
+	}
+	
+	/*
+	 * 
+	 * Tests are ordered by class in alphabetical order
+	 * 
+	 */
+	
+	@Test 
+	void airport_equalsTest()
+	{
+		testCreate();
+		
+		assertEquals(false, t_airport1.equals(t_duration1));
+		assertEquals(false, t_airport1.equals(null));
+		assertEquals(false, t_airport1.equals(t_airport2));
+		Airport temp = Airport.of(t_code1, t_duration1);
+		assertEquals(true, t_airport1.equals(temp));
+	}
+	
+	@Test
+	void airport_hashCodeTest()
+	{
+		testCreate();
+		
+		assertEquals(t_airport1.hashCode(), t_code1.hashCode());
 	}
 	
 	@Test
@@ -108,7 +168,7 @@ class Airport_Test {
 	
 		assertEquals(true, t_group1.add(t_flight1));
 		assertEquals(false, t_group1.add(t_flight1));
-		SimpleFlight temp = SimpleFlight.of(t_code1, t_leg2, t_schedule2);
+		SimpleFlight temp = SimpleFlight.of(t_code1, t_leg2, t_schedule2, t_config1);
 		assertEquals(false, t_group1.add(temp));
 		assertEquals(false, t_group1.add(t_flight2));
 		
@@ -149,32 +209,41 @@ class Airport_Test {
 		assertEquals(returnSet, t_group1.flightsAtOrAfter(t_time2));
 	}
 	
-	@Test 
-	void airport_equalsTest()
+	@Test
+	void seatConfiguration_seatsTest()
 	{
 		testCreate();
 		
-		assertEquals(false, t_airport1.equals(t_duration1));
-		assertEquals(false, t_airport1.equals(null));
-		assertEquals(false, t_airport1.equals(t_airport2));
-		Airport temp = Airport.of(t_code1, t_duration1);
-		assertEquals(true, t_airport1.equals(temp));
+		assertThrows(NullPointerException.class, () -> {t_config1.seats(null); });
+		
+		assertEquals(new Integer(1), t_config1.seats(SeatClass.BUSINESS));
 	}
 	
 	@Test
-	void airport_hashCodeTest()
+	void seatConfiguration_setSeatsTest()
 	{
 		testCreate();
 		
-		assertEquals(t_airport1.hashCode(), t_code1.hashCode());
+		assertThrows(NullPointerException.class, () -> {t_config1.setSeats(null, 0); });
+		
+		assertEquals(1, t_config1.setSeats(SeatClass.BUSINESS, 5));
+		assertEquals(5, t_config1.seats(SeatClass.BUSINESS));
 	}
-
+	
 	@Test
-	void testNullParam()
-	{		
+	void seatConfiguration_hasSeatsTest()
+	{
 		testCreate();
 		
-		assertThrows(NullPointerException.class, () -> {Airport.of(null, t_duration1); });
+		assertEquals(true, t_config1.hasSeats());
+		
+		for(SeatClass v : SeatClass.values())
+		{
+			t_config1.setSeats(v, 0);
+		}
+		
+		assertEquals(false, t_config1.hasSeats());
 	}
+	
 
 }
