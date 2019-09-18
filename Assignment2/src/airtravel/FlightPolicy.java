@@ -14,17 +14,19 @@ import java.util.function.BiFunction;
 public final class FlightPolicy extends AbstractFlight
 {
 	/**
-	 * @brief
+	 * @brief The flight that is used for referencing
 	 */
 	private final Flight m_flight;
 	
 	/**
-	 * @brief 
+	 * @brief The function used for seat selection
 	 */
 	private final BiFunction<SeatConfiguration, FareClass, SeatConfiguration> m_policy;
 
 	/**
 	 * @brief Private constructor
+	 * @param[in] _flight: flight that is used for referencing
+	 * @param[in] _policy: function used for seat selection
 	 * @return This method performs an action and does not return a value
 	 */
 	private FlightPolicy(
@@ -37,6 +39,8 @@ public final class FlightPolicy extends AbstractFlight
 	
 	/**
 	 * @brief Builder method for @FlightPolicy class
+	 * @param[in] _flight: flight that is used for referencing
+	 * @param[in] _policy: function used for seat selection
 	 * @returns A constructed FlightPoliciy object
 	 */
 	public static final FlightPolicy of(			
@@ -127,7 +131,6 @@ public final class FlightPolicy extends AbstractFlight
 	public static final Flight limited(Flight _flight)
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
-		
 		
 		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
 			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
