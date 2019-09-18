@@ -46,6 +46,11 @@ public final class FareClass
 			int _identifier,
 			SeatClass _seatClass)
 	{
+		if(_identifier < 0)
+		{
+			throw new IllegalArgumentException("parameter _identifier cannot be negative");
+		}
+		
 		_seatClass = Objects.requireNonNull(_seatClass, "Parameter _seatClass cannot be null");
 		
 		return new FareClass(_identifier, _seatClass);

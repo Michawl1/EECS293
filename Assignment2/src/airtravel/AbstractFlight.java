@@ -9,6 +9,7 @@ package airtravel;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public abstract class AbstractFlight implements Flight
 {
@@ -41,12 +42,16 @@ public abstract class AbstractFlight implements Flight
 	}
 	
 	public boolean isShort(Duration _durationMax)
-	{		
+	{
+		_durationMax = Objects.requireNonNull(_durationMax, "Parameter cannot be null");
+		
 		return getFlightSchedule().isShort(_durationMax);
 	}
 	
 	public boolean hasSeats(FareClass _fareClass)
 	{
+		_fareClass = Objects.requireNonNull(_fareClass, "Parameter cannot be null");
+		
 		return seatsAvailable(_fareClass).hasSeats();
 	}
 	

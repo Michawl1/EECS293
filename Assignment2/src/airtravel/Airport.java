@@ -86,6 +86,7 @@ public final class Airport implements Comparable<Airport>
 	public boolean addFlight(Flight _flight)
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
+		
 		return m_outFlights.add(_flight);
 	}
 	
@@ -97,6 +98,7 @@ public final class Airport implements Comparable<Airport>
 	public boolean removeFlight(Flight _flight)
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
+		
 		return m_outFlights.remove(_flight);
 	}
 

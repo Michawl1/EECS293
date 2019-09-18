@@ -194,6 +194,12 @@ class Airport_Test
 	}
 	
 	@Test
+	void fareClass_ofTest()
+	{
+		assertThrows(IllegalArgumentException.class, () -> {FareClass.of(-1, SeatClass.BUSINESS); });
+	}
+	
+	@Test
 	void flightGroup_addTest()
 	{
 		testCreate();
@@ -299,6 +305,7 @@ class Airport_Test
 		testCreate();
 		
 		assertThrows(NullPointerException.class, () -> {t_config2.setSeats(null, 0); });
+		assertThrows(IllegalArgumentException.class, () -> {t_config2.setSeats(SeatClass.BUSINESS, -1); });
 		
 		assertEquals(1, t_config2.setSeats(SeatClass.BUSINESS, 5));
 		assertEquals(5, t_config2.seats(SeatClass.BUSINESS));

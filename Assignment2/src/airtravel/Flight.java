@@ -55,9 +55,10 @@ public interface Flight
 	public LocalTime arrivalTime();
 	
 	/**
-	 * @brief
-	 * @param[in] _durationMax
-	 * @return
+	 * @brief checks if the flight is shorter than or equal to the given duration
+	 * @param[in] _durationMax: the duration being compared
+	 * @return true if _durationMax is shorter than equal current duration
+	 *         false if _durationMax is longer than current duration
 	 */
 	public boolean isShort(Duration _durationMax);
 	

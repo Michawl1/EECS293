@@ -110,6 +110,10 @@ public final class FlightPolicy extends AbstractFlight
 	public static final Flight reserve(Flight _flight, int _reserve)
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter _flight cannot be null");
+		if(_reserve < 0)
+		{
+			throw new IllegalArgumentException("_reserve cannot be negative");
+		}
 		
 		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
 			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
