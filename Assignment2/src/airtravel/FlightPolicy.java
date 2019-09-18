@@ -72,6 +72,11 @@ public final class FlightPolicy extends AbstractFlight
 					copySeatConfig.setSeats(v, 0);
 				}
 			}
+			
+			for(SeatClass v : SeatClass.values()) 
+			{
+				System.out.println(copySeatConfig.seats(v));
+			}
 			return copySeatConfig;
 		});
 		
