@@ -11,17 +11,17 @@ import java.util.Objects;
 
 public final class Leg 
 {
-	/*
+	/**
 	 * @brief The origin Airport for this leg
 	 */
 	private final Airport m_origin;
 	
-	/*
+	/**
 	 * @brief The destination Airport for this leg
 	 */
 	private final Airport m_destination;
 	
-	/*
+	/**
 	 * @brief Private constructor
 	 * @param[in] _origin: The origin Airport
 	 * @param[in] _destination: The destination Airport
@@ -35,7 +35,7 @@ public final class Leg
 		m_destination = _destination;
 	}
 	
-	/*
+	/**
 	 * @brief Builder method for @Leg class
 	 * @param[in] _origin: the origin used for the leg
 	 * @param[in] _destination: the destination used for the leg
@@ -51,7 +51,7 @@ public final class Leg
 		return new Leg(_origin, _destination);
 	}
 	
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_origin of the object
 	 */
@@ -60,7 +60,7 @@ public final class Leg
 		return m_origin;
 	}
 	
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_destination of the object
 	 */

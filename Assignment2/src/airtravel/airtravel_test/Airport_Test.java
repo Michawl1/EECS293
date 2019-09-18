@@ -11,8 +11,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-class Airport_Test {
+class Airport_Test 
+{
 	
+	static Duration t_duration0;
 	static Duration t_duration1;
 	static Duration t_duration2;
 	static Duration t_duration3;
@@ -86,6 +88,7 @@ class Airport_Test {
 	//initializes a bunch of objects for testing
 	public void testCreate()
 	{
+		t_duration0 = Duration.ofHours(0);
 		t_duration1 = Duration.ofHours(1);
 		t_duration2 = Duration.ofHours(2);
 		t_duration3 = Duration.ofHours(3);
@@ -247,29 +250,36 @@ class Airport_Test {
 		testCreate();
 		
 		assertEquals(false, t_policy1.seatsAvailable(t_fare1).hasSeats());
+		assertEquals(true, FlightPolicy.strict(t_flight2).hasSeats(t_fare2));
+	
 		FlightPolicy temp = FlightPolicy.of(t_flight2, t_bifunction1);
-		assertEquals(true, temp.seatsAvailable(t_fare1).hasSeats());
-
+		temp.seatsAvailable(t_fare2);
 		
-		System.out.println(FlightPolicy.strict(t_flight1).hasSeats(t_fare1));
+		assertEquals(true, temp.seatsAvailable(t_fare2).hasSeats());
 	}
 	
 	@Test
 	void flightPolicy_restrictedDurationTest()
 	{
+		testCreate();
 		
+		assertEquals(false, t_policy2.seatsAvailable(t_fare1).hasSeats());
+		assertEquals(true, FlightPolicy.restrictedDuration(t_flight2, t_duration1).hasSeats(t_fare1));
+		System.out.println("hellod");
+		assertEquals(true, FlightPolicy.restrictedDuration(t_flight2, t_duration0).hasSeats(t_fare1));
+		System.out.println("hellod");
 	}
 	
 	@Test
 	void flightPolicy_reserveTest()
 	{
-		
+		testCreate();
 	}
 	
 	@Test
 	void flightPolicy_limitedTest()
 	{
-		
+		testCreate();
 	}
 	
 	@Test

@@ -13,17 +13,17 @@ import java.util.Objects;
 
 public final class FlightSchedule 
 {
-	/*
+	/**
 	 * @brief the departure time for the flight
 	 */
 	private final LocalTime m_departureTime;
 	
-	/*
+	/**
 	 * @brief The arrival time for the flight
 	 */
 	private final LocalTime m_arrivalTime;
 	
-	/*
+	/**
 	 * @brief Private constructor
 	 * @param[in] _departureTime: departure time for the flight
 	 * @param[in] _arrivalTime: arrival time for the flight
@@ -37,7 +37,7 @@ public final class FlightSchedule
 		m_arrivalTime = _arrivalTime;
 	}
 	
-	/*
+	/**
 	 * @brief Builder method for @FlightSchedule class
 	 * @param[in] _departureTime: the departure time used for the FlightSchedule
 	 * @param[in] _arrivalTime: the arrival time used for the FlightSchedule
@@ -58,7 +58,7 @@ public final class FlightSchedule
 		return new FlightSchedule(_departureTime, _arrivalTime);
 	}
 	
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_departureTime of the object
 	 */
@@ -67,7 +67,7 @@ public final class FlightSchedule
 		return m_departureTime;
 	}
 	
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_arrivalTime of the object
 	 */
@@ -76,7 +76,7 @@ public final class FlightSchedule
 		return m_arrivalTime;
 	}
 	
-	/*
+	/**
 	 * @brief tells whether the flight is shorter than or equal to the given duration
 	 * @param[in] _durationMax: the max duration of the flight
 	 * @returns true if _durationMax is shorter than equal current duration

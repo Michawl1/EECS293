@@ -20,7 +20,7 @@ public final class FlightGroup
 	
 	private final NavigableMap<LocalTime, Set<Flight>> m_flights;
 	
-	/*
+	/**
 	 * @brief Private constructor
 	 * @param[in] _origin: the origin airport for the flight
 	 * @returns This method performs an action and does not return a value
@@ -32,7 +32,7 @@ public final class FlightGroup
 		m_flights = new TreeMap<LocalTime, Set<Flight>>();
 	}
 	
-	/*
+	/**
 	 * @brief Builder method for @FlightGroup class
 	 * @param[in] _origin: the origin airport
 	 * @returns A constructed FlightGroup object
@@ -45,7 +45,7 @@ public final class FlightGroup
 		return new FlightGroup(_origin);	
 	}
 	
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_origin of the object
 	 */
@@ -54,7 +54,7 @@ public final class FlightGroup
 		return m_origin;
 	}
 
-	/*
+	/**
 	 * @brief Adds flight to the tree map
 	 * @returns true if the flight can be successfully added
 	 */
@@ -86,7 +86,7 @@ public final class FlightGroup
 		return m_flights.put(_flight.departureTime(), flightSet) == null;
 	}
 	
-	/*
+	/**
 	 * @brief removes a flight from the tree
 	 * @returns True if the was succesfully removed
 	 */
@@ -107,7 +107,7 @@ public final class FlightGroup
 		return m_flights.remove(_flight.departureTime(), flightSet);
 	}
 	
-	/*
+	/**
 	 * @brief finds flights after a time
 	 * @returns A set of all flights that are after @_departureTime
 	 */

@@ -11,27 +11,27 @@ import java.util.Objects;
 
 public final class SimpleFlight extends AbstractFlight
 {
-	/*
+	/**
 	 * @brief The code used for the airport identifier
 	 */
 	private final String m_code;
 	
-	/*
+	/**
 	 * @brief The leg the flight will partake
 	 */
 	private final Leg m_leg;
 	
-	/*
+	/**
 	 * @brief The schedule for the flight
 	 */
 	private final FlightSchedule m_flightSchedule;
 	
-	/*
+	/**
 	 * @brief Tracks the seats on the flight
 	 */
 	private final SeatConfiguration m_seatsAvailable;
 	
-	/*
+	/**
 	 * @brief Private constructor
 	 * @param[in] _code: the code of the airport
 	 * @param[in] _leg: the leg for the flight
@@ -51,7 +51,7 @@ public final class SimpleFlight extends AbstractFlight
 		m_seatsAvailable = _seatsAvailable;
 	}
 	
-	/*
+	/**
 	 * @brief Builder method for @SimpleFlight class
 	 * @param[in] _code: the code of the airport
 	 * @param[in] _leg: the leg for the flight
@@ -77,7 +77,7 @@ public final class SimpleFlight extends AbstractFlight
 		return temp;	
 	}
 	
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_code of the object
 	 */
@@ -87,7 +87,7 @@ public final class SimpleFlight extends AbstractFlight
 		return m_code;
 	}
 
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_leg of the object
 	 */
@@ -97,7 +97,7 @@ public final class SimpleFlight extends AbstractFlight
 		return m_leg;
 	}
 
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_flightSchedule of the object
 	 */

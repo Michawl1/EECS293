@@ -13,17 +13,17 @@ import java.util.function.BiFunction;
 
 public final class FlightPolicy extends AbstractFlight
 {
-	/*
+	/**
 	 * @brief
 	 */
 	private final Flight m_flight;
 	
-	/*
+	/**
 	 * @brief 
 	 */
 	private final BiFunction<SeatConfiguration, FareClass, SeatConfiguration> m_policy;
 
-	/*
+	/**
 	 * @brief Private constructor
 	 * @return This method performs an action and does not return a value
 	 */
@@ -35,7 +35,7 @@ public final class FlightPolicy extends AbstractFlight
 		m_policy = _policy;
 	}
 	
-	/*
+	/**
 	 * @brief Builder method for @FlightPolicy class
 	 * @returns A constructed FlightPoliciy object
 	 */
@@ -54,7 +54,7 @@ public final class FlightPolicy extends AbstractFlight
 	}
 	
 	
-	/*
+	/**
 	 * @brief strict policy for a flight
 	 * @param[in] _flight: the flight we're checking for seats
 	 * @returns a flight that only shows the available seats in a given class
@@ -72,17 +72,18 @@ public final class FlightPolicy extends AbstractFlight
 					copySeatConfig.setSeats(v, 0);
 				}
 			}
-			
-			for(SeatClass v : SeatClass.values()) 
-			{
-				System.out.println(copySeatConfig.seats(v));
-			}
 			return copySeatConfig;
 		});
 		
 		return policy;
 	}
 	
+	/**
+	 * @brief restricted policy for a flight
+	 * @param[in] _flight: the flight we're checking for seats
+	 * @param[in] _durationMax: the duration used to determine if users should take available seats
+	 * @return a flight that only shows the available seats
+	 */
 	public static final Flight restrictedDuration(Flight _flight, Duration _durationMax)
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter _flight cannot be null");
@@ -92,8 +93,9 @@ public final class FlightPolicy extends AbstractFlight
 		{
 			return strict(_flight);
 		}
+		System.out.println("hello");
 		
-		return null;
+		return _flight;
 	}
 	
 	public static final Flight reserve(Flight _flight, int _reserve)
@@ -132,6 +134,8 @@ public final class FlightPolicy extends AbstractFlight
 		_fareClass = Objects.requireNonNull(_fareClass, "Parameters cannot be null");
 
 		SeatConfiguration returnConfig = m_flight.seatsAvailable(_fareClass);
-		return m_policy.apply(returnConfig, _fareClass);
+		returnConfig = m_policy.apply(returnConfig, _fareClass);
+		
+		return returnConfig;
 	}
 }

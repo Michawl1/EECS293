@@ -12,17 +12,17 @@ import java.util.Objects;
 
 public final class FareClass 
 {
-	/*
+	/**
 	 * @brief price identifier for the seat
 	 */
 	private final int m_identifier;
 	
-	/*
+	/**
 	 * @brief seat class identifier
 	 */
 	private final SeatClass m_seatClass;
 	
-	/*
+	/**
 	 * @brief Private constructor
 	 * @param[in] _identifier: the numerical identifier for the class of ticket
 	 * @param[in] _seatClass: the enum seat class that is being used
@@ -36,7 +36,7 @@ public final class FareClass
 		m_seatClass = _seatClass;
 	}
 	
-	/*
+	/**
 	 * @brief Builder method for @FareClass class
 	 * @param[in] _identifier: the numerical identifier for the class of ticket
 	 * @param[in] _seatClass: the enum seat class that is being used
@@ -51,7 +51,7 @@ public final class FareClass
 		return new FareClass(_identifier, _seatClass);
 	}
 
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_identifier of the object
 	 */
@@ -60,7 +60,7 @@ public final class FareClass
 		return m_identifier;
 	}
 	
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_seatClass of the object
 	 */

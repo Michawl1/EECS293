@@ -12,12 +12,12 @@ import java.util.Objects;
 
 public final class SeatConfiguration 
 {
-	/*
+	/**
 	 * @brief Keeps track of all the seats available
 	 */
 	private final EnumMap<SeatClass, Integer> m_seats;
 	
-	/*
+	/**
 	 * @brief Private constructor
 	 * @param[in] _seats: a map of all the available seats for all the enum values in SeatClass
 	 * @returns This method performs an action and does not return a value
@@ -28,7 +28,7 @@ public final class SeatConfiguration
 		m_seats = _seats;
 	}
 	
-	/*
+	/**
 	 * @brief Builder method for @SeatConfiguration class
 	 * @param[in] _seats: a map of all the available seats for all the enum values in SeatClass
 	 * @returns A constructed SeatConfiguration object
@@ -48,7 +48,7 @@ public final class SeatConfiguration
 		return copy;
 	}
 	
-	/*
+	/**
 	 * @param[in] _seatClass: a value of the @SeatClass enum used determine class
 	 * @returns the number of seats available in the given class
 	 */
@@ -59,7 +59,7 @@ public final class SeatConfiguration
 		return m_seats.get(_seatClass).intValue();
 	}
 	
-	/*
+	/**
 	 * @brief sets the number of seats available in the given class
 	 * @param[in] _seatClass: a value of the @SeatClass enum used determine class
 	 * @param[in] _seats: The new amount of seats available
@@ -75,7 +75,7 @@ public final class SeatConfiguration
 		return previousSeats;
 	}
 	
-	/*
+	/**
 	 * @brief checks if there is any seats available in any class
 	 * @returns True if there is an available seat
 	 */

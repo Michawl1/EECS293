@@ -13,23 +13,23 @@ import java.util.Objects;
 public final class Airport implements Comparable<Airport> 
 {
 	
-	/*
+	/**
 	 * @brief Universal identifier for the airport
 	 */
 	private final String m_code;
 	
-	/*
+	/**
 	 * @brief Shortest length of time that a passenger needs to transfer planes
 	 * 		  or to walk from the reservation counter to the gates
 	 */
 	private final Duration m_connectionTimeMin;
 	
-	/*
+	/**
 	 * @brief Group manager for flights
 	 */
 	private final FlightGroup m_outFlights;
 	
-	/*
+	/**
 	 * @brief Private constructor
 	 * @param[in] _code: the code used for the airport
 	 * @param[in] _connectionTimeMin: connection time or reservation time
@@ -44,7 +44,7 @@ public final class Airport implements Comparable<Airport>
 		m_outFlights = FlightGroup.of(this);
 	}
 	
-	/*
+	/**
 	 * @brief Builder method for @Airport class
 	 * @param[in] _code: the code used for the airport
 	 * @param[in] _connectionTimeMin: connect ion time or reservation time
@@ -60,7 +60,7 @@ public final class Airport implements Comparable<Airport>
 		return new Airport(_code, _connectionTimeMin);
 	}
 	
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_code of the object
 	 */
@@ -69,7 +69,7 @@ public final class Airport implements Comparable<Airport>
 		return this.m_code;
 	}
 	
-	/*
+	/**
 	 * @brief Simple getter method
 	 * @returns @m_connectionTimeMin of the object
 	 */
@@ -78,7 +78,7 @@ public final class Airport implements Comparable<Airport>
 		return this.m_connectionTimeMin;
 	}
 	
-	/*
+	/**
 	 * @brief adds a flight to the flight group
 	 * @returns false if it failed to add flight
 	 * 			true if the succeeded in adding the flight
@@ -89,7 +89,7 @@ public final class Airport implements Comparable<Airport>
 		return m_outFlights.add(_flight);
 	}
 	
-	/*
+	/**
 	 * @brief removes a flight from the flight group
 	 * @returns false if it failed to remove flight
 	 * 				  true if it succeeded in removing the flight
@@ -100,7 +100,7 @@ public final class Airport implements Comparable<Airport>
 		return m_outFlights.remove(_flight);
 	}
 
-	/*
+	/**
 	 * @brief Comparable implementation for @Airport class
 	 * @param[in] arg0:	Airport getting compared to
 	 * @returns 1 if arg0 is greater in value than the calling object
@@ -113,7 +113,7 @@ public final class Airport implements Comparable<Airport>
 		return m_code.compareTo(arg0.getCode());
 	}
 	
-	/*
+	/**
 	 * @brief Equals implementation for @Airport class
 	 * @param[in] o: Airport getting compared to
 	 * @returns: true if this.m_code and o.m_code are equivalent
@@ -130,7 +130,7 @@ public final class Airport implements Comparable<Airport>
 		return m_code.equals(((Airport)o).getCode());
 	}
 	
-	/*
+	/**
 	 * @brief HashCode implementation for @Airport class
 	 * @returns the int value of the String @m_code
 	 */
@@ -140,7 +140,7 @@ public final class Airport implements Comparable<Airport>
 		return m_code.hashCode();
 	}
 	
-	/*
+	/**
 	 * @brief ToString implementation for @Airport class
 	 * @returns a string containing this.m_code
 	 */

@@ -12,7 +12,6 @@ import java.time.LocalTime;
 
 public abstract class AbstractFlight implements Flight
 {
-
 	public abstract String getCode();
 	
 	public abstract Leg getLeg();
