@@ -158,13 +158,13 @@ class Airport_Test
 		
 		t_bifunction1 = (a, b) -> FlightPolicy.strict(t_flight1).seatsAvailable(b);
 		t_bifunction2 = (a, b) -> FlightPolicy.restrictedDuration(t_flight1, t_duration1).seatsAvailable(b);
-		t_bifunction3 = (a, b) -> FlightPolicy.reserve(t_flight1, 2).seatsAvailable(b);
+		t_bifunction3 = (a, b) -> FlightPolicy.reserve(t_flight1, 0).seatsAvailable(b);
 		t_bifunction4 = (a, b) -> FlightPolicy.limited(t_flight1).seatsAvailable(b);
 		
 		t_policy1 = FlightPolicy.of(t_flight1, t_bifunction1);
-		t_policy2 = FlightPolicy.of(t_flight2, t_bifunction2);
-		t_policy3 = FlightPolicy.of(t_flight3, t_bifunction3);
-		t_policy4 = FlightPolicy.of(t_flight4, t_bifunction4);
+		t_policy2 = FlightPolicy.of(t_flight1, t_bifunction2);
+		t_policy3 = FlightPolicy.of(t_flight1, t_bifunction3);
+		t_policy4 = FlightPolicy.of(t_flight1, t_bifunction4);
 	}
 	
 	/*
@@ -251,11 +251,6 @@ class Airport_Test
 		
 		assertEquals(false, t_policy1.seatsAvailable(t_fare1).hasSeats());
 		assertEquals(true, FlightPolicy.strict(t_flight2).hasSeats(t_fare2));
-	
-		FlightPolicy temp = FlightPolicy.of(t_flight2, t_bifunction1);
-		temp.seatsAvailable(t_fare2);
-		
-		assertEquals(true, temp.seatsAvailable(t_fare2).hasSeats());
 	}
 	
 	@Test
@@ -265,21 +260,27 @@ class Airport_Test
 		
 		assertEquals(false, t_policy2.seatsAvailable(t_fare1).hasSeats());
 		assertEquals(true, FlightPolicy.restrictedDuration(t_flight2, t_duration1).hasSeats(t_fare1));
-		System.out.println("hellod");
 		assertEquals(true, FlightPolicy.restrictedDuration(t_flight2, t_duration0).hasSeats(t_fare1));
-		System.out.println("hellod");
 	}
 	
 	@Test
 	void flightPolicy_reserveTest()
 	{
 		testCreate();
+		
+		assertEquals(false, t_policy3.seatsAvailable(t_fare1).hasSeats());
+		assertEquals(false, FlightPolicy.reserve(t_flight2, 1).hasSeats(t_fare1));
+		assertEquals(true, FlightPolicy.reserve(t_flight3, 1).hasSeats(t_fare1));
 	}
 	
 	@Test
 	void flightPolicy_limitedTest()
 	{
 		testCreate();
+		
+		assertEquals(false, t_policy4.seatsAvailable(t_fare1).hasSeats());
+		assertEquals(false, FlightPolicy.limited(t_flight1).hasSeats(t_fare1));
+		assertEquals(true, FlightPolicy.limited(t_flight2).hasSeats(t_fare3));
 	}
 	
 	@Test

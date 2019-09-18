@@ -63,7 +63,7 @@ public final class FlightPolicy extends AbstractFlight
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
 		
-		FlightPolicy policy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
+		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
 			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
 			for(SeatClass v : SeatClass.values())
 			{
@@ -75,7 +75,7 @@ public final class FlightPolicy extends AbstractFlight
 			return copySeatConfig;
 		});
 		
-		return policy;
+		return returnPolicy;
 	}
 	
 	/**
@@ -93,21 +93,59 @@ public final class FlightPolicy extends AbstractFlight
 		{
 			return strict(_flight);
 		}
-		System.out.println("hello");
 		
 		return _flight;
 	}
 	
+	/**
+	 * @brief reserve policy for a flight
+	 * @param[in] _flight: the flight we're checking for seats
+	 * @param[in] _reserve: the amount of seats that needs to be deducted from each SeatClass
+	 * @return a flight that has had the @_reserved amount of seats reserved
+	 */
 	public static final Flight reserve(Flight _flight, int _reserve)
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter _flight cannot be null");
-		return null;
+		
+		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
+			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
+			for(SeatClass v : SeatClass.values())
+			{
+				copySeatConfig.setSeats(v, seatConfig.setSeats(v, 0) - _reserve);
+			}
+			return copySeatConfig;
+		});
+		
+		return returnPolicy;
 	}
 	
+	/**
+	 * @brief limited policy for a flight
+	 * @param[in] _flight: the flight we're checking for seats
+	 * @return a flight that has available seats at the fare class and one class above it
+	 */
 	public static final Flight limited(Flight _flight)
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
-		return null;
+		
+		
+		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
+			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
+			boolean nextTierFlag = false;
+			for(int i = SeatClass.values().length - 1; i >= 0; i--)
+			{
+				SeatClass v = SeatClass.values()[i];
+				if(v == fareClassConfig.getSeatClass() || nextTierFlag)
+				{
+					copySeatConfig.setSeats(v, seatConfig.setSeats(v, 0));
+					nextTierFlag = !nextTierFlag;
+				}
+				System.out.println();
+			}
+			return copySeatConfig;
+		});
+		
+		return returnPolicy;
 	}
 
 	@Override
