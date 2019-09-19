@@ -150,6 +150,10 @@ public final class FlightPolicy extends AbstractFlight
 					copySeatConfig.setSeats(v, seatConfig.setSeats(v, 0));
 					nextTierFlag = !nextTierFlag;
 				}
+				else
+				{
+					copySeatConfig.setSeats(v, 0);
+				}
 			}
 			return copySeatConfig;
 		});

@@ -301,20 +301,39 @@ class Airport_Test
 	}
 	
 	@Test
-	void flightPolicy_differentPolicyTest()
+	void flightPolicy_custom1PolicyTest()
 	{
 		testCreate();
 		
-		FlightPolicy testPolicy1 = FlightPolicy.of(t_flight1, (seatConfig, fareClassConfig) -> {
+		/**
+		 * This policy allows for the user to downgrade their flight if they want to save money,
+		 * will return a seat configuration with all the seats in the next direct lower class
+		 */
+		FlightPolicy testPolicy1 = FlightPolicy.of(t_flight2, (seatConfig, fareClassConfig) -> {
 			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
+			boolean nextTierFlag = false;
 			for(SeatClass v : SeatClass.values())
 			{
-				
+				if(v == fareClassConfig.getSeatClass() || nextTierFlag)
+				{
+					copySeatConfig.setSeats(v, seatConfig.setSeats(v, 0));
+					nextTierFlag = !nextTierFlag;
+				}
+				else
+				{
+					copySeatConfig.setSeats(v, 0);
+				}
 			}
 			return copySeatConfig;
 		});
 		
-		
+		assertEquals(true, testPolicy1.hasSeats(t_fare1));
+		assertEquals(false, testPolicy1.hasSeats(t_fare3));
+	}
+	
+	@Test
+	void flightPolicy_custom2PolicyTest()
+	{
 		/**
 		 * This policy behaves like strict, but will only return a seatConfiguration that both matches in fare class
 		 * and an arbitrary fare identifier, in this instance, anything greater than 1
@@ -326,10 +345,6 @@ class Airport_Test
 				if(v != fareClassConfig.getSeatClass() || 1 >= fareClassConfig.getIdentifier())
 				{
 					copySeatConfig.setSeats(v, 0);
-				}
-				else
-				{
-					copySeatConfig.setSeats(v, seatConfig.setSeats(v, 0));
 				}
 			}
 			return copySeatConfig;
