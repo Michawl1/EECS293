@@ -67,6 +67,7 @@ public final class FlightPolicy extends AbstractFlight
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
 		
+		//bifunction parameter overrides the .apply method
 		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
 			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
 			for(SeatClass v : SeatClass.values())
@@ -115,6 +116,7 @@ public final class FlightPolicy extends AbstractFlight
 			throw new IllegalArgumentException("_reserve cannot be negative");
 		}
 		
+		//bifunction parameter overrides the .apply method
 		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
 			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
 			for(SeatClass v : SeatClass.values())
@@ -136,6 +138,7 @@ public final class FlightPolicy extends AbstractFlight
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
 		
+		//bifunction parameter overrides the .apply method
 		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
 			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
 			boolean nextTierFlag = false;

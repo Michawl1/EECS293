@@ -301,6 +301,20 @@ class Airport_Test
 	}
 	
 	@Test
+	void flightPolicy_differentPolicyTest()
+	{
+		testCreate();
+		
+		FlightPolicy testPolicy1 = FlightPolicy.of(t_flight1, (seatConfig, fareClassConfig) -> {
+			return null;
+		});
+		
+		FlightPolicy testPolicy2 = FlightPolicy.of(t_flight2, (seatConfig, fareClassConfig) -> {
+			return null;
+		});
+	}
+	
+	@Test
 	void seatConfiguration_seatsTest()
 	{
 		testCreate();
