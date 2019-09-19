@@ -68,6 +68,7 @@ public final class FlightPolicy extends AbstractFlight
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
 		
 		//bifunction parameter overrides the .apply method
+		//TODO don't call variables v
 		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
 			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
 			for(SeatClass v : SeatClass.values())

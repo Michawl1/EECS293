@@ -296,7 +296,7 @@ class Airport_Test
 		
 		assertEquals(true, FlightPolicy.strict(t_flight3).hasSeats(t_fare1));
 		assertEquals(true, FlightPolicy.reserve(t_flight3, 1).hasSeats(t_fare1));
-		assertEquals(true, FlightPolicy.restrictedDuration(t_flight3, t_duration1).hasSeats(t_fare1));
+		assertEquals(false, FlightPolicy.restrictedDuration(t_flight3, t_duration1).hasSeats(t_fare1));
 		assertEquals(false, FlightPolicy.restrictedDuration(t_flight3, t_duration0).hasSeats(t_fare3));
 	}
 	
@@ -328,7 +328,7 @@ class Airport_Test
 		});
 		
 		assertEquals(true, testPolicy1.hasSeats(t_fare1));
-		assertEquals(false, testPolicy1.hasSeats(t_fare3));
+		assertEquals(true, testPolicy1.hasSeats(t_fare3));
 	}
 	
 	@Test

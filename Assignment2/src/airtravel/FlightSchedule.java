@@ -62,6 +62,8 @@ public final class FlightSchedule
 	 * @brief Simple getter method
 	 * @returns @m_departureTime of the object
 	 */
+	
+	
 	public LocalTime getDepartureTime()
 	{
 		return m_departureTime;
@@ -88,6 +90,6 @@ public final class FlightSchedule
 		
 		Duration totalDuration = Duration.between(m_departureTime, m_arrivalTime);
 		
-		return _durationMax.compareTo(totalDuration) < 0;
+		return _durationMax.compareTo(totalDuration) <= 0;
 	}
 }

@@ -44,8 +44,15 @@ public final class SeatConfiguration
 	public static final SeatConfiguration of(
 			SeatConfiguration _seatConfig)
 	{
-		SeatConfiguration copy = _seatConfig;
-		return copy;
+		_seatConfig = Objects.requireNonNull(_seatConfig, "Parameters cannot be null");
+		
+		EnumMap<SeatClass, Integer> copyMap = new EnumMap<SeatClass, Integer>(SeatClass.class);
+		
+		for(SeatClass v : SeatClass.values())
+		{
+			copyMap.put(v, _seatConfig.seats(v));
+		}
+		return new SeatConfiguration(copyMap);	
 	}
 	
 	/**
@@ -56,6 +63,7 @@ public final class SeatConfiguration
 	{
 		_seatClass = Objects.requireNonNull(_seatClass, "Parameters cannot be null");
 		
+		//TODO make sure >= 0?
 		return m_seats.get(_seatClass).intValue();
 	}
 	
@@ -73,6 +81,7 @@ public final class SeatConfiguration
 			_seats = 0;
 		}
 		
+		//TODO find out if this can throw a null pointer
 		int previousSeats = m_seats.get(_seatClass).intValue();
 		m_seats.put(_seatClass, new Integer(_seats));
 		
@@ -87,7 +96,7 @@ public final class SeatConfiguration
 	{
 		for(SeatClass v : SeatClass.values())
 		{
-			if(!m_seats.get(v).equals(new Integer(0)))
+			if(!m_seats.get(v).equals(0))
 			{
 				return true;
 			}
