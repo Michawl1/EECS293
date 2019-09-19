@@ -306,12 +306,37 @@ class Airport_Test
 		testCreate();
 		
 		FlightPolicy testPolicy1 = FlightPolicy.of(t_flight1, (seatConfig, fareClassConfig) -> {
-			return null;
+			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
+			for(SeatClass v : SeatClass.values())
+			{
+				
+			}
+			return copySeatConfig;
 		});
 		
+		
+		/**
+		 * This policy behaves like strict, but will only return a seatConfiguration that both matches in fare class
+		 * and an arbitrary fare identifier, in this instance, anything greater than 1
+		 */
 		FlightPolicy testPolicy2 = FlightPolicy.of(t_flight2, (seatConfig, fareClassConfig) -> {
-			return null;
+			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
+			for(SeatClass v : SeatClass.values())
+			{
+				if(v != fareClassConfig.getSeatClass() || 1 >= fareClassConfig.getIdentifier())
+				{
+					copySeatConfig.setSeats(v, 0);
+				}
+				else
+				{
+					copySeatConfig.setSeats(v, seatConfig.setSeats(v, 0));
+				}
+			}
+			return copySeatConfig;
 		});
+		
+		assertEquals(true, testPolicy2.hasSeats(t_fare2));
+		assertEquals(false, testPolicy2.hasSeats(t_fare1));
 	}
 	
 	@Test
