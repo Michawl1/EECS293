@@ -70,7 +70,7 @@ public final class SeatConfiguration
 		_seatClass = Objects.requireNonNull(_seatClass, "Parameters cannot be null");
 		if(_seats < 0)
 		{
-			throw new IllegalArgumentException("_seatClass cannot be less than 0");
+			_seats = 0;
 		}
 		
 		int previousSeats = m_seats.get(_seatClass).intValue();

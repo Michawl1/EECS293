@@ -290,6 +290,17 @@ class Airport_Test
 	}
 	
 	@Test
+	void flightPolicy_multiPolicyTest()
+	{
+		testCreate();
+		
+		assertEquals(true, FlightPolicy.strict(t_flight3).hasSeats(t_fare1));
+		assertEquals(true, FlightPolicy.reserve(t_flight3, 1).hasSeats(t_fare1));
+		assertEquals(true, FlightPolicy.restrictedDuration(t_flight3, t_duration1).hasSeats(t_fare1));
+		assertEquals(false, FlightPolicy.restrictedDuration(t_flight3, t_duration0).hasSeats(t_fare3));
+	}
+	
+	@Test
 	void seatConfiguration_seatsTest()
 	{
 		testCreate();
@@ -305,7 +316,6 @@ class Airport_Test
 		testCreate();
 		
 		assertThrows(NullPointerException.class, () -> {t_config2.setSeats(null, 0); });
-		assertThrows(IllegalArgumentException.class, () -> {t_config2.setSeats(SeatClass.BUSINESS, -1); });
 		
 		assertEquals(1, t_config2.setSeats(SeatClass.BUSINESS, 5));
 		assertEquals(5, t_config2.seats(SeatClass.BUSINESS));
