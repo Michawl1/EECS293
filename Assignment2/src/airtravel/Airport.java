@@ -8,7 +8,9 @@
 package airtravel;
 
 import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Objects;
+import java.util.Set;
 
 public final class Airport implements Comparable<Airport> 
 {
@@ -100,6 +102,30 @@ public final class Airport implements Comparable<Airport>
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
 		
 		return m_outFlights.remove(_flight);
+	}
+	
+	/**
+	 * @brief checks that flights have seats for a given class and leave on or after
+	 * 		  a give time
+	 * @param[in] _departureTime: The LocalTime that flights must be after
+	 * @param[in] _fareClass: The fare class that the seat must be
+	 * @return A set of Flights that contains the valid flights
+	 */
+	public Set<Flight> avaialableFlghts(
+			LocalTime _departureTime,
+			FareClass _fareClass)
+	{
+		Set<Flight> validSet = m_outFlights.flightsAtOrAfter(_departureTime);
+		
+		for(Flight flight : validSet)
+		{
+			if(!flight.hasSeats(_fareClass))
+			{
+				validSet.remove(flight);
+			}
+		}
+		
+		return validSet;
 	}
 
 	/**
