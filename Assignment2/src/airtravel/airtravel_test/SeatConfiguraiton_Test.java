@@ -2,18 +2,27 @@ package airtravel.airtravel_test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
-import airtravel.*;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.BiFunction;
 
-class Airport_Test 
+import org.junit.jupiter.api.Test;
+
+import airtravel.Airport;
+import airtravel.FareClass;
+import airtravel.Flight;
+import airtravel.FlightGroup;
+import airtravel.FlightPolicy;
+import airtravel.FlightSchedule;
+import airtravel.Leg;
+import airtravel.SeatClass;
+import airtravel.SeatConfiguration;
+import airtravel.SimpleFlight;
+
+class SeatConfiguraiton_Test 
 {
-	
+
 	static Duration t_duration0;
 	static Duration t_duration1;
 	static Duration t_duration2;
@@ -166,25 +175,54 @@ class Airport_Test
 		t_policy3 = FlightPolicy.of(t_flight1, t_bifunction3);
 		t_policy4 = FlightPolicy.of(t_flight1, t_bifunction4);
 	}
-	
-	@Test 
-	void airport_equalsTest()
+
+	@Test
+	void seatConfiguration_seatsTest()
 	{
 		testCreate();
 		
-		assertEquals(false, t_airport1.equals(t_duration1));
-		assertEquals(false, t_airport1.equals(null));
-		assertEquals(false, t_airport1.equals(t_airport2));
-		Airport temp = Airport.of(t_code1, t_duration1);
-		assertEquals(true, t_airport1.equals(temp));
+		assertThrows(NullPointerException.class, () -> {t_config2.seats(null); });
+		
+		assertEquals(new Integer(1), t_config2.seats(SeatClass.BUSINESS));
 	}
 	
 	@Test
-	void airport_hashCodeTest()
+	void seatConfiguration_setSeatsTest()
 	{
 		testCreate();
 		
-		assertEquals(t_airport1.hashCode(), t_code1.hashCode());
+		assertThrows(NullPointerException.class, () -> {t_config2.setSeats(null, 0); });
+		
+		assertEquals(1, t_config2.setSeats(SeatClass.BUSINESS, 5));
+		assertEquals(5, t_config2.seats(SeatClass.BUSINESS));
 	}
-
+	
+	@Test
+	void seatConfiguration_hasSeatsTest()
+	{
+		testCreate();
+		
+		assertEquals(true, t_config2.hasSeats());
+		
+		for(SeatClass v : SeatClass.values())
+		{
+			t_config2.setSeats(v, 0);
+		}
+		
+		assertEquals(false, t_config2.hasSeats());
+	}
+	
+	@Test
+	void seatConfiguraiton_ensureCloningWorks()
+	{
+		testCreate();
+		
+		SeatConfiguration temp = SeatConfiguration.of(t_config1);
+		
+		assertNotEquals(temp, t_config1);
+		
+		temp.setSeats(SeatClass.BUSINESS, 99);
+		
+		assertNotEquals(temp.seats(SeatClass.BUSINESS), t_config1.seats(SeatClass.BUSINESS));
+	}
 }

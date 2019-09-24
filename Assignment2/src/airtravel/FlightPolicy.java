@@ -50,8 +50,9 @@ public final class FlightPolicy extends AbstractFlight
 		_flight = Objects.requireNonNull(_flight, "Parameter _fight cannot be null");
 		_policy = Objects.requireNonNull(_policy, "Parameter _policy cannot be null");
 		
-		FlightPolicy temp = new FlightPolicy(_flight, _policy);
+		_flight.getLeg().getOrigin().removeFlight(_flight);
 		
+		FlightPolicy temp = new FlightPolicy(_flight, _policy);
 		_flight.getLeg().getOrigin().addFlight(temp);
 		
 		return temp;
@@ -68,14 +69,13 @@ public final class FlightPolicy extends AbstractFlight
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
 		
 		//bifunction parameter overrides the .apply method
-		//TODO don't call variables v
 		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
 			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
-			for(SeatClass v : SeatClass.values())
+			for(SeatClass seatClass : SeatClass.values())
 			{
-				if(v != fareClassConfig.getSeatClass())
+				if(seatClass != fareClassConfig.getSeatClass())
 				{
-					copySeatConfig.setSeats(v, 0);
+					copySeatConfig.setSeats(seatClass, 0);
 				}
 			}
 			return copySeatConfig;
@@ -120,9 +120,9 @@ public final class FlightPolicy extends AbstractFlight
 		//bifunction parameter overrides the .apply method
 		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
 			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
-			for(SeatClass v : SeatClass.values())
+			for(SeatClass seatClass : SeatClass.values())
 			{
-				copySeatConfig.setSeats(v, seatConfig.setSeats(v, 0) - _reserve);
+				copySeatConfig.setSeats(seatClass, seatConfig.seats(seatClass) - _reserve);
 			}
 			return copySeatConfig;
 		});
@@ -142,18 +142,20 @@ public final class FlightPolicy extends AbstractFlight
 		//bifunction parameter overrides the .apply method
 		FlightPolicy returnPolicy = FlightPolicy.of(_flight, (seatConfig, fareClassConfig) -> {
 			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
-			boolean nextTierFlag = false;
-			for(int i = SeatClass.values().length - 1; i >= 0; i--)
+			for(SeatClass seatClass : SeatClass.values())
 			{
-				SeatClass v = SeatClass.values()[i];
-				if(v == fareClassConfig.getSeatClass() || nextTierFlag)
+				if(seatClass == fareClassConfig.getSeatClass())
 				{
-					copySeatConfig.setSeats(v, seatConfig.setSeats(v, 0));
-					nextTierFlag = !nextTierFlag;
-				}
-				else
-				{
-					copySeatConfig.setSeats(v, 0);
+					//temp variable to shorten line length
+					int seatClassOrdinal = seatClass.ordinal();
+					
+					copySeatConfig.setSeats(seatClass, seatConfig.seats(seatClass));
+					
+					//since we check the previous SeatClass, we want to make sure we don't go out of bounds
+					if(seatClassOrdinal > 0)
+					{
+						copySeatConfig.setSeats(SeatClass.values()[seatClassOrdinal - 1], seatConfig.seats(seatClass));
+					}
 				}
 			}
 			return copySeatConfig;
@@ -184,10 +186,7 @@ public final class FlightPolicy extends AbstractFlight
 	public SeatConfiguration seatsAvailable(FareClass _fareClass) 
 	{		
 		_fareClass = Objects.requireNonNull(_fareClass, "Parameters cannot be null");
-
-		SeatConfiguration returnConfig = m_flight.seatsAvailable(_fareClass);
-		returnConfig = m_policy.apply(returnConfig, _fareClass);
 		
-		return returnConfig;
+		return m_policy.apply(m_flight.seatsAvailable(_fareClass), _fareClass);
 	}
 }

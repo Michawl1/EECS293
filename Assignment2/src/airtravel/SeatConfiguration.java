@@ -25,6 +25,14 @@ public final class SeatConfiguration
 	private SeatConfiguration(
 			EnumMap<SeatClass, Integer> _seats)
 	{
+		for(SeatClass seatClass : SeatClass.values())
+		{
+			if(_seats.get(seatClass) < 0)
+			{
+				_seats.put(seatClass, 0);
+			}
+		}
+		
 		m_seats = _seats;
 	}
 	
@@ -41,6 +49,11 @@ public final class SeatConfiguration
 		return new SeatConfiguration(_seats);
 	}
 	
+	/**
+	 * @brief Builder method for @SeatConfiguration class
+	 * @param[in] _seatConfig: a constructed seatConfiguration object
+	 * @return An identical seat configuration object, but has its own memory address
+	 */
 	public static final SeatConfiguration of(
 			SeatConfiguration _seatConfig)
 	{
@@ -62,8 +75,7 @@ public final class SeatConfiguration
 	public final int seats(SeatClass _seatClass)
 	{
 		_seatClass = Objects.requireNonNull(_seatClass, "Parameters cannot be null");
-		
-		//TODO make sure >= 0?
+
 		return m_seats.get(_seatClass).intValue();
 	}
 	
@@ -94,9 +106,9 @@ public final class SeatConfiguration
 	 */
 	public final boolean hasSeats()
 	{
-		for(SeatClass v : SeatClass.values())
+		for(SeatClass seat : SeatClass.values())
 		{
-			if(!m_seats.get(v).equals(0))
+			if(!m_seats.get(seat).equals(0))
 			{
 				return true;
 			}

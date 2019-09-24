@@ -2,18 +2,27 @@ package airtravel.airtravel_test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
-import airtravel.*;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.BiFunction;
 
-class Airport_Test 
+import org.junit.jupiter.api.Test;
+
+import airtravel.Airport;
+import airtravel.FareClass;
+import airtravel.Flight;
+import airtravel.FlightGroup;
+import airtravel.FlightPolicy;
+import airtravel.FlightSchedule;
+import airtravel.Leg;
+import airtravel.SeatClass;
+import airtravel.SeatConfiguration;
+import airtravel.SimpleFlight;
+
+class FlightSchedule_Test 
 {
-	
+
 	static Duration t_duration0;
 	static Duration t_duration1;
 	static Duration t_duration2;
@@ -166,25 +175,17 @@ class Airport_Test
 		t_policy3 = FlightPolicy.of(t_flight1, t_bifunction3);
 		t_policy4 = FlightPolicy.of(t_flight1, t_bifunction4);
 	}
-	
-	@Test 
-	void airport_equalsTest()
-	{
-		testCreate();
-		
-		assertEquals(false, t_airport1.equals(t_duration1));
-		assertEquals(false, t_airport1.equals(null));
-		assertEquals(false, t_airport1.equals(t_airport2));
-		Airport temp = Airport.of(t_code1, t_duration1);
-		assertEquals(true, t_airport1.equals(temp));
-	}
-	
+
 	@Test
-	void airport_hashCodeTest()
+	void flightSchedule_isShortTest()
 	{
 		testCreate();
 		
-		assertEquals(t_airport1.hashCode(), t_code1.hashCode());
+		Duration temp = Duration.ofMinutes(70);
+		
+		assertEquals(true, t_schedule1.isShort(t_duration0));
+		assertEquals(true, t_schedule1.isShort(temp));
+		assertEquals(false, t_schedule1.isShort(t_duration3));
 	}
 
 }

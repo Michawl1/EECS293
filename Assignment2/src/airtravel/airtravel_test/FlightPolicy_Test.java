@@ -2,18 +2,26 @@ package airtravel.airtravel_test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
-import airtravel.*;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.BiFunction;
 
-class Airport_Test 
+import org.junit.jupiter.api.Test;
+
+import airtravel.Airport;
+import airtravel.FareClass;
+import airtravel.Flight;
+import airtravel.FlightGroup;
+import airtravel.FlightPolicy;
+import airtravel.FlightSchedule;
+import airtravel.Leg;
+import airtravel.SeatClass;
+import airtravel.SeatConfiguration;
+import airtravel.SimpleFlight;
+
+class FlightPolicy_Test 
 {
-	
 	static Duration t_duration0;
 	static Duration t_duration1;
 	static Duration t_duration2;
@@ -166,25 +174,110 @@ class Airport_Test
 		t_policy3 = FlightPolicy.of(t_flight1, t_bifunction3);
 		t_policy4 = FlightPolicy.of(t_flight1, t_bifunction4);
 	}
-	
-	@Test 
-	void airport_equalsTest()
+
+	@Test
+	void flightPolicy_strictTest()
 	{
 		testCreate();
 		
-		assertEquals(false, t_airport1.equals(t_duration1));
-		assertEquals(false, t_airport1.equals(null));
-		assertEquals(false, t_airport1.equals(t_airport2));
-		Airport temp = Airport.of(t_code1, t_duration1);
-		assertEquals(true, t_airport1.equals(temp));
+		assertEquals(false, t_policy1.seatsAvailable(t_fare1).hasSeats());
+		assertEquals(true, FlightPolicy.strict(t_flight2).hasSeats(t_fare2));
 	}
 	
 	@Test
-	void airport_hashCodeTest()
+	void flightPolicy_restrictedDurationTest()
 	{
 		testCreate();
 		
-		assertEquals(t_airport1.hashCode(), t_code1.hashCode());
+		assertEquals(false, t_policy2.seatsAvailable(t_fare1).hasSeats());
+		assertEquals(true, FlightPolicy.restrictedDuration(t_flight2, t_duration1).hasSeats(t_fare1));
+		assertEquals(true, FlightPolicy.restrictedDuration(t_flight2, t_duration0).hasSeats(t_fare1));
 	}
+	
+	@Test
+	void flightPolicy_reserveTest()
+	{
+		testCreate();
+		
+		assertEquals(false, t_policy3.seatsAvailable(t_fare1).hasSeats());
+		assertEquals(false, FlightPolicy.reserve(t_flight2, 1).hasSeats(t_fare1));
+		assertEquals(true, FlightPolicy.reserve(t_flight3, 1).hasSeats(t_fare1));
+	}
+	
+	@Test
+	void flightPolicy_limitedTest()
+	{
+		testCreate();
+		
+		assertEquals(false, t_policy4.seatsAvailable(t_fare1).hasSeats());
+		assertEquals(false, FlightPolicy.limited(t_flight1).hasSeats(t_fare1));
+		assertEquals(true, FlightPolicy.limited(t_flight2).hasSeats(t_fare3));
+	}
+	
+	@Test
+	void flightPolicy_multiPolicyTest()
+	{
+		testCreate();
+		
+		assertEquals(true, FlightPolicy.strict(t_flight3).hasSeats(t_fare1));
+		assertEquals(true, FlightPolicy.reserve(t_flight3, 1).hasSeats(t_fare1));
+		assertEquals(true, FlightPolicy.restrictedDuration(t_flight3, t_duration1).hasSeats(t_fare1));
+		assertEquals(true, FlightPolicy.restrictedDuration(t_flight3, t_duration0).hasSeats(t_fare3));
+	}
+	
+	@Test
+	void flightPolicy_custom1PolicyTest()
+	{
+		testCreate();
+		
+		/**
+		 * This policy allows for the user to downgrade their flight if they want to save money,
+		 * will return a seat configuration with all the seats in the next direct lower class
+		 */
+		FlightPolicy testPolicy1 = FlightPolicy.of(t_flight2, (seatConfig, fareClassConfig) -> {
+			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
+			boolean nextTierFlag = false;
+			for(SeatClass seatClass : SeatClass.values())
+			{
+				if(seatClass == fareClassConfig.getSeatClass() || nextTierFlag)
+				{
+					copySeatConfig.setSeats(seatClass, seatConfig.seats(seatClass));
+					nextTierFlag = !nextTierFlag;
+				}
+				else
+				{
+					copySeatConfig.setSeats(seatClass, 0);
+				}
+			}
+			return copySeatConfig;
+		});
+		
+		assertEquals(true, testPolicy1.hasSeats(t_fare1));
+		assertEquals(true, testPolicy1.hasSeats(t_fare3));
+	}
+	
+	@Test
+	void flightPolicy_custom2PolicyTest()
+	{
+		/**
+		 * This policy behaves like strict, but will only return a seatConfiguration that both matches in fare class
+		 * and an arbitrary fare identifier, in this instance, anything greater than 1
+		 */
+		FlightPolicy testPolicy2 = FlightPolicy.of(t_flight2, (seatConfig, fareClassConfig) -> {
+			SeatConfiguration copySeatConfig = SeatConfiguration.of(seatConfig);
+			for(SeatClass seatClass : SeatClass.values())
+			{
+				if(seatClass != fareClassConfig.getSeatClass() || 1 >= fareClassConfig.getIdentifier())
+				{
+					copySeatConfig.setSeats(seatClass, 0);
+				}
+			}
+			return copySeatConfig;
+		});
+		
+		assertEquals(true, testPolicy2.hasSeats(t_fare2));
+		assertEquals(false, testPolicy2.hasSeats(t_fare1));
+	}
+
 
 }

@@ -2,8 +2,6 @@ package airtravel.airtravel_test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
-import airtravel.*;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.EnumMap;
@@ -11,9 +9,22 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-class Airport_Test 
+import org.junit.jupiter.api.Test;
+
+import airtravel.Airport;
+import airtravel.FareClass;
+import airtravel.Flight;
+import airtravel.FlightGroup;
+import airtravel.FlightPolicy;
+import airtravel.FlightSchedule;
+import airtravel.Leg;
+import airtravel.SeatClass;
+import airtravel.SeatConfiguration;
+import airtravel.SimpleFlight;
+
+class FlightGroup_Test 
 {
-	
+
 	static Duration t_duration0;
 	static Duration t_duration1;
 	static Duration t_duration2;
@@ -167,24 +178,54 @@ class Airport_Test
 		t_policy4 = FlightPolicy.of(t_flight1, t_bifunction4);
 	}
 	
-	@Test 
-	void airport_equalsTest()
+	@Test
+	void flightGroup_addTest()
 	{
 		testCreate();
 		
-		assertEquals(false, t_airport1.equals(t_duration1));
-		assertEquals(false, t_airport1.equals(null));
-		assertEquals(false, t_airport1.equals(t_airport2));
-		Airport temp = Airport.of(t_code1, t_duration1);
-		assertEquals(true, t_airport1.equals(temp));
+		assertThrows(NullPointerException.class, () -> {t_group1.add(null); });
+		assertThrows(IllegalArgumentException.class, () -> {t_group1.add(t_flight4); });
+	
+		assertEquals(true, t_group1.add(t_flight1));
+		assertEquals(false, t_group1.add(t_flight1));
+		SimpleFlight temp = SimpleFlight.of(t_code1, t_leg2, t_schedule2, t_config1);
+		assertEquals(false, t_group1.add(temp));
+		assertEquals(false, t_group1.add(t_flight2));
+		
 	}
 	
 	@Test
-	void airport_hashCodeTest()
+	void flightGroup_removeTest()
 	{
 		testCreate();
 		
-		assertEquals(t_airport1.hashCode(), t_code1.hashCode());
+		assertThrows(NullPointerException.class, () -> {t_group1.remove(null); });
+		assertThrows(IllegalArgumentException.class, () -> {t_group1.remove(t_flight4); });
+		
+		t_group1.add(t_flight1);
+		t_group1.add(t_flight2);
+		t_group1.add(t_flight3);
+		
+		assertEquals(true, t_group1.remove(t_flight1));
+		assertEquals(false, t_group1.remove(t_flight1));
 	}
+	
+	@Test 
+	void flightGroup_flightsAtOrAfterTest()
+	{
+		testCreate();
+		
+		assertThrows(NullPointerException.class, () -> {t_group1.flightsAtOrAfter(null); });
+		
+		t_group1.add(t_flight1);
+		t_group1.add(t_flight2);
+		t_group1.add(t_flight3);
+		t_group1.add(t_flight5);
+		
+		Set<Flight> returnSet = new HashSet<Flight>();
 
+		returnSet.add(t_flight5);
+		
+		assertEquals(returnSet, t_group1.flightsAtOrAfter(t_time2));
+	}
 }

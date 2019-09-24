@@ -48,7 +48,7 @@ public final class SimpleFlight extends AbstractFlight
 		m_code = _code;
 		m_leg = _leg;
 		m_flightSchedule = _flightSchedule;
-		m_seatsAvailable = _seatsAvailable;
+		m_seatsAvailable = SeatConfiguration.of(_seatsAvailable);
 	}
 	
 	/**
@@ -110,7 +110,7 @@ public final class SimpleFlight extends AbstractFlight
 	@Override
 	public SeatConfiguration seatsAvailable(FareClass _fareClass)
 	{
-		return m_seatsAvailable;
+		return SeatConfiguration.of(m_seatsAvailable);
 	}
 
 }
