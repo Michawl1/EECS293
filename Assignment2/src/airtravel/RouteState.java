@@ -10,6 +10,7 @@ package airtravel;
 import java.time.LocalTime;
 import java.util.Map;
 import java.util.NavigableSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -49,7 +50,14 @@ final class RouteState
 	 */
 	void replaceNode(RouteNode _routeNode)
 	{
-
+		for(RouteNode node : m_unreached)
+		{
+			if(node.equals(_routeNode))
+			{
+				m_unreached.remove(node);
+				m_unreached.add(_routeNode);
+			}
+		}
 	}
 	
 	/**
@@ -66,7 +74,23 @@ final class RouteState
 	 */
 	RouteNode closestUnreached()
 	{
-		return null;
+		if(m_unreached.isEmpty())
+		{
+			throw new NoSuchElementException("No such element exists");
+		}
+		
+		RouteNode smallestTime = m_unreached.first();
+		
+		for(RouteNode node : m_unreached)
+		{
+			//smallestTime > node
+			if(smallestTime.compareTo(node) > 0)
+			{
+				smallestTime = node;
+			}
+		}
+		
+		return smallestTime;
 	}
 	
 	

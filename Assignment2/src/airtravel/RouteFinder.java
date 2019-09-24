@@ -54,9 +54,12 @@ public final class RouteFinder
 		
 		RouteState state = new RouteState(m_airports, _origin, _departureTime);
 		
+		RouteNode currentNode = RouteNode.of(_origin);
+		RouteNode destinationNode = RouteNode.of(_destination);
+		
 		while(!state.allReached())
 		{
-			RouteNode currentNode = state.closestUnreached();
+			currentNode = state.closestUnreached();
 			
 			if(currentNode.getAirport().equals(_destination))
 			{
@@ -65,7 +68,10 @@ public final class RouteFinder
 			
 			for(Flight flight : currentNode.availableFlights(_fareClass))
 			{
-				
+				if(new RouteTime(flight.arrivalTime()).compareTo(destinationNode.getArrivalTime()) < 0)
+				{
+					destinationNode = RouteNode.of(flight, null);
+				}
 			}
 		}
 		
