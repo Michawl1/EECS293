@@ -8,9 +8,10 @@
 
 package airtravel;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
-public final class RouteTime 
+public final class RouteTime implements Comparable<RouteTime>
 {
 
 	/**
@@ -19,30 +20,74 @@ public final class RouteTime
 	private final LocalTime m_routeTime;
 	
 	/**
-	 * @brief Private constructor
+	 * @brief public constructor
 	 * @param _routeTime: the time it takes to complete a route
 	 * @returns This method performs an action and does not return a value
 	 */
-	private RouteTime(
-			LocalTime _routeTime)
-	{
+	public RouteTime(LocalTime _routeTime)
+	{		
 		m_routeTime = _routeTime;
 	}
 	
 	/**
-	 * @brief Builder method for @RouteTime class
-	 * @param _routeTime: the time it takes to complete a route
-	 * @return A constructed RouteTime object
+	 * @brief value for unknown RouteTimes
 	 */
-	public static final RouteTime of(
-			LocalTime _routeTime)
+	public static final RouteTime UNKNOWN = new RouteTime(null);
+	
+	/**
+	 * @brief Simple getter method
+	 * @return @m_routTime of the object
+	 */
+	public LocalTime getTime()
 	{
-		return new RouteTime(_routeTime);
+		if(!isKnown())
+		{
+			throw new IllegalStateException("Cannot get m_routeTime as it is unkown");
+		}
+		return m_routeTime;
 	}
 	
-	public static final RouteTime UNKNOWN()
+	/**
+	 * @brief tells whether the time is known
+	 * @return true if the time is known
+	 * 		   false if the time is unkown
+	 */
+	public boolean isKnown()
 	{
-		return null;
+		return m_routeTime != null;
+	}	
+	
+	/**
+	 * @brief adds duration to the RouteTime
+	 * @param _duration: the amount of time to be added to the RouteTime
+	 * @return: a new RouteTime with a new time after the duration
+	 */
+	public RouteTime plus(Duration _duration)
+	{
+		if(isKnown())
+		{
+			return new RouteTime(this.getTime().plus(_duration));
+		}
+		
+		return UNKNOWN;
 	}
 	
+	@Override
+	public int compareTo(RouteTime arg0) 
+	{		
+		if(!arg0.isKnown() && !this.isKnown()) 
+		{
+			return 0;
+		}
+		else if(!this.isKnown())
+		{
+			return -1;
+		}
+		else if(!arg0.isKnown())
+		{
+			return 1;
+		}
+
+		return arg0.getTime().compareTo(this.m_routeTime);
+	}
 }
