@@ -58,8 +58,10 @@ public final class RouteFinder
 		RouteNode destinationNode = RouteNode.of(_destination);
 		
 		while(!state.allReached())
-		{
+		{			
 			currentNode = state.closestUnreached();
+			
+			state.replaceNode(currentNode);
 			
 			if(currentNode.getAirport().equals(_destination))
 			{

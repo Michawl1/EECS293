@@ -8,9 +8,11 @@
 package airtravel;
 
 import java.time.LocalTime;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NavigableSet;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -31,14 +33,20 @@ final class RouteState
 			Airport _origin, 
 			LocalTime _departureTime)
 	{
-		m_unreached = new TreeSet<RouteNode>();
+		Objects.requireNonNull(_airports, "Parameter _airports cannot be null");
+		Objects.requireNonNull(_origin, "Parameter _origin cannot be null");
+		Objects.requireNonNull(_departureTime, "Parameter _departureTime cannot be null");
+		
+		m_airportNode = new LinkedHashMap<Airport, RouteNode>();
+		m_unreached = new TreeSet<>();
 		
 		RouteNode first = RouteNode.of(_origin, new RouteTime(_departureTime), null);
 		
-		m_unreached.add(first);
+		m_airportNode.put(_origin, first);
 		
 		for(Airport airport : _airports)
 		{
+			m_airportNode.put(airport, RouteNode.of(airport));
 			m_unreached.add(RouteNode.of(airport));
 		}
 		
@@ -50,6 +58,11 @@ final class RouteState
 	 */
 	void replaceNode(RouteNode _routeNode)
 	{
+		m_airportNode.replace(_routeNode.getAirport(), _routeNode);
+		
+		m_unreached.remove(_routeNode);
+		
+		/*
 		for(RouteNode node : m_unreached)
 		{
 			if(node.equals(_routeNode))
@@ -58,14 +71,15 @@ final class RouteState
 				m_unreached.add(_routeNode);
 			}
 		}
+		*/
 	}
 	
 	/**
 	 * @return whether all airports have been reached or not
 	 */
 	boolean allReached()
-	{
-		return false;
+	{		
+		return m_unreached.isEmpty();
 	}
 	
 	/**
@@ -100,6 +114,8 @@ final class RouteState
 	 */
 	RouteNode airportNode(Airport _airport)
 	{
+		Objects.requireNonNull(_airport);
+		
 		return m_airportNode.get(_airport);
 	}
 }

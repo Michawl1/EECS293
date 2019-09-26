@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.BiFunction;
 
-import airtravel.RouteTime;
-import airtravel.SeatClass;
-import airtravel.SeatConfiguration;
-import airtravel.SimpleFlight;
+import org.junit.jupiter.api.Test;
+
 import airtravel.Airport;
 import airtravel.FareClass;
 import airtravel.Flight;
@@ -18,13 +18,14 @@ import airtravel.FlightGroup;
 import airtravel.FlightPolicy;
 import airtravel.FlightSchedule;
 import airtravel.Leg;
-import airtravel.RouteNode;
+import airtravel.RouteFinder;
+import airtravel.RouteTime;
+import airtravel.SeatClass;
+import airtravel.SeatConfiguration;
+import airtravel.SimpleFlight;
 
-import org.junit.jupiter.api.Test;
-
-class RouteNode_Test 
+class RouteFinder_Test 
 {
-
 	static Duration t_duration0;
 	static Duration t_duration1;
 	static Duration t_duration2;
@@ -189,35 +190,24 @@ class RouteNode_Test
 	}
 	
 	@Test
-	void routeNode_DepartureTimeTest() 
+	void test() 
 	{
 		testCreate();
+		
+		Set<Airport> testAirports = new HashSet<>();
+		
+		testAirports.add(t_airport1);
+		testAirports.add(t_airport2);
+		testAirports.add(t_airport3);
+		testAirports.add(t_airport4);
+		
 		
 		t_airport1.addFlight(t_flight1);
 		t_airport1.addFlight(t_flight2);
-		t_airport1.addFlight(t_flight3);
-		t_airport1.addFlight(t_flight5);
 		
-		RouteNode temp1 = RouteNode.of(t_airport1, t_routeTime1, null);
-		RouteNode temp2 = RouteNode.of(t_airport1);
+		RouteFinder finder = RouteFinder.of(testAirports);
 		
-		assertEquals(3600, t_airport1.getConnectionTimeMin().getSeconds());
-		assertEquals(LocalTime.of(2, 0), temp1.departureTime().getTime());
-		assertEquals(LocalTime.of(1, 0), temp2.departureTime().getTime());
-	}
-	
-	@Test
-	void routeNode_isArrivalTimeKnownTest()
-	{
-		testCreate();
-		
-		RouteNode temp1 = RouteNode.of(t_airport1);
-		
-		assertEquals(false, temp1.isArrivalTimeKnown());
-		
-		RouteNode temp2 = RouteNode.of(t_airport1, t_routeTime1, null);
-		
-		assertEquals(true, temp2.isArrivalTimeKnown());
+		assertEquals(finder.route(t_airport1, t_airport2, LocalTime.of(0, 30), t_fare1).getAirport().toString(), "Pit");
 	}
 
 }

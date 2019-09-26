@@ -78,7 +78,7 @@ public final class RouteNode implements Comparable<RouteNode>
 	{
 		Objects.requireNonNull(_airport, "Parameter cannot be null");
 		
-		return new RouteNode(_airport, null, null);
+		return new RouteNode(_airport, RouteTime.UNKNOWN, null);
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public final class RouteNode implements Comparable<RouteNode>
 	 */
 	public final Boolean isArrivalTimeKnown()
 	{
-		return m_arrivalTime != null;
+		return !m_arrivalTime.equals(RouteTime.UNKNOWN);
 	}
 	
 	/**
