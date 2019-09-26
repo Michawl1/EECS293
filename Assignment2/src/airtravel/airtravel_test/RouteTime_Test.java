@@ -23,8 +23,8 @@ class RouteTime_Test
 		
 		
 		assertEquals(0, temp1.compareTo(temp2));
-		assertEquals(true, temp1.compareTo(temp0) < 0);
-		assertEquals(true, temp1.compareTo(temp3) > 0);
+		assertEquals(true, temp1.compareTo(temp0) > 0);
+		assertEquals(true, temp1.compareTo(temp3) < 0);
 		assertEquals(true, temp1.compareTo(temp4) > 0);
 		assertEquals(true, temp4.compareTo(temp1) < 0);
 		assertEquals(true, temp5.compareTo(temp4) == 0);

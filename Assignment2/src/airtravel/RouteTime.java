@@ -10,6 +10,7 @@ package airtravel;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public final class RouteTime implements Comparable<RouteTime>
 {
@@ -64,6 +65,8 @@ public final class RouteTime implements Comparable<RouteTime>
 	 */
 	public RouteTime plus(Duration _duration)
 	{
+		Objects.requireNonNull(_duration, "Parameter cannot be null");
+		
 		if(isKnown())
 		{
 			return new RouteTime(this.getTime().plus(_duration));
@@ -75,6 +78,7 @@ public final class RouteTime implements Comparable<RouteTime>
 	@Override
 	public int compareTo(RouteTime arg0) 
 	{		
+		//could do with boolean compareTo
 		if(!arg0.isKnown() && !this.isKnown()) 
 		{
 			return 0;
@@ -88,6 +92,6 @@ public final class RouteTime implements Comparable<RouteTime>
 			return 1;
 		}
 
-		return arg0.getTime().compareTo(this.m_routeTime);
+		return this.getTime().compareTo(arg0.m_routeTime);
 	}
 }

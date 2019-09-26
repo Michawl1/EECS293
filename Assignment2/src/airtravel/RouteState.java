@@ -28,15 +28,12 @@ final class RouteState
 	 * @param _origin: the origin airport for the RouteState
 	 * @param _departureTime: the departure time for @_origin airport
 	 */
-	RouteState(
+	private RouteState(
 			Set<Airport> _airports, 
 			Airport _origin, 
 			LocalTime _departureTime)
 	{
-		Objects.requireNonNull(_airports, "Parameter _airports cannot be null");
-		Objects.requireNonNull(_origin, "Parameter _origin cannot be null");
-		Objects.requireNonNull(_departureTime, "Parameter _departureTime cannot be null");
-		
+		// TODO re look at this
 		m_airportNode = new LinkedHashMap<Airport, RouteNode>();
 		m_unreached = new TreeSet<>();
 		
@@ -53,6 +50,25 @@ final class RouteState
 	}
 	
 	/**
+	 * @brief Builder for @RouteState
+	 * @param _airports: a set of airports
+	 * @param _origin: the origin airport for the RouteState
+	 * @param _departureTime: the departure time for @_origin airport
+	 * @return A constructed RouteState object
+	 */
+	static final RouteState of(
+			Set<Airport> _airports,
+			Airport _origin,
+			LocalTime _departureTime)
+	{
+		Objects.requireNonNull(_airports, "Parameter _airports cannot be null");
+		Objects.requireNonNull(_origin, "Parameter _origin cannot be null");
+		Objects.requireNonNull(_departureTime, "Parameter _departureTime cannot be null");
+		
+		return new RouteState(_airports, _origin, _departureTime);
+	}
+	
+	/**
 	 * @brief replaces the route node for the corresponding airport
 	 * @param _routeNode: the routeNode being replaced
 	 */
@@ -60,18 +76,9 @@ final class RouteState
 	{
 		m_airportNode.replace(_routeNode.getAirport(), _routeNode);
 		
+		// TODO add new node to unreached
+		// TODO want to remove the old node not the new node
 		m_unreached.remove(_routeNode);
-		
-		/*
-		for(RouteNode node : m_unreached)
-		{
-			if(node.equals(_routeNode))
-			{
-				m_unreached.remove(node);
-				m_unreached.add(_routeNode);
-			}
-		}
-		*/
 	}
 	
 	/**
@@ -93,12 +100,13 @@ final class RouteState
 			throw new NoSuchElementException("No such element exists");
 		}
 		
+		// TODO this gets the closest unreached node because how trees work (or last does)
 		RouteNode smallestTime = m_unreached.first();
 		
 		for(RouteNode node : m_unreached)
 		{
-			//smallestTime > node
-			if(smallestTime.compareTo(node) > 0)
+			//smallestTime < node
+			if(smallestTime.compareTo(node) < 0)
 			{
 				smallestTime = node;
 			}

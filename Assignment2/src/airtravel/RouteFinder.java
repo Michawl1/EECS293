@@ -51,8 +51,12 @@ public final class RouteFinder
 			LocalTime _departureTime,
 			FareClass _fareClass)
 	{
+		Objects.requireNonNull(_origin, "Parameter _origin cannot be null");
+		Objects.requireNonNull(_destination, "Parameter _destination cannot be null");
+		Objects.requireNonNull(_departureTime, "Parameter _departureTime cannot be null");
+		Objects.requireNonNull(_fareClass, "Parameter _fareClass cannot be null");
 		
-		RouteState state = new RouteState(m_airports, _origin, _departureTime);
+		RouteState state = RouteState.of(m_airports, _origin, _departureTime);
 		
 		RouteNode currentNode = RouteNode.of(_origin);
 		RouteNode destinationNode = RouteNode.of(_destination);
@@ -61,6 +65,7 @@ public final class RouteFinder
 		{			
 			currentNode = state.closestUnreached();
 			
+			// TODO this doesn't do anything
 			state.replaceNode(currentNode);
 			
 			if(currentNode.getAirport().equals(_destination))
@@ -68,11 +73,14 @@ public final class RouteFinder
 				return currentNode;
 			}
 			
+			// TODO look at what your doing with destination
+			// destination of the flight not total destination
 			for(Flight flight : currentNode.availableFlights(_fareClass))
 			{
 				if(new RouteTime(flight.arrivalTime()).compareTo(destinationNode.getArrivalTime()) < 0)
 				{
 					destinationNode = RouteNode.of(flight, null);
+					//TODO want to add the best option to the state
 				}
 			}
 		}

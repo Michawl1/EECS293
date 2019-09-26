@@ -125,6 +125,7 @@ public final class RouteNode implements Comparable<RouteNode>
 	public final RouteTime departureTime()
 	{
 		m_airport.getConnectionTimeMin();
+		// TODO RouteTime has a plus
 		
 		if(isArrivalTimeKnown())
 		{			
@@ -133,7 +134,7 @@ public final class RouteNode implements Comparable<RouteNode>
 		else
 		{
 			LocalTime temp = LocalTime.of(0, 0, 0, 0);
-			return new RouteTime(temp.plus(m_airport.getConnectionTimeMin()));
+			return new RouteTime(temp.plus(m_airport.getConnectionTimeMin())); //Return RouteTime.UNKNOWN
 		}
 	}
 	

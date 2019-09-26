@@ -191,7 +191,7 @@ class RouteState_Test
 		t_airport1.addFlight(t_flight1);
 		t_airport1.addFlight(t_flight2);
 
-		RouteState testState = new RouteState(testAirports, t_airport2, t_time1);
+		RouteState testState = RouteState.of(testAirports, t_airport2, t_time1);
 		
 		assertEquals("Chi", testState.closestUnreached().getAirport().toString());
 		

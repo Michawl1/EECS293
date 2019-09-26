@@ -93,7 +93,6 @@ public final class SeatConfiguration
 			_seats = 0;
 		}
 		
-		//TODO find out if this can throw a null pointer
 		int previousSeats = m_seats.get(_seatClass).intValue();
 		m_seats.put(_seatClass, new Integer(_seats));
 		

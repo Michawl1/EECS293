@@ -196,14 +196,13 @@ class RouteFinder_Test
 		
 		Set<Airport> testAirports = new HashSet<>();
 		
+		t_airport1.addFlight(t_flight1);
+		t_airport1.addFlight(t_flight2);
+		
 		testAirports.add(t_airport1);
 		testAirports.add(t_airport2);
 		testAirports.add(t_airport3);
 		testAirports.add(t_airport4);
-		
-		
-		t_airport1.addFlight(t_flight1);
-		t_airport1.addFlight(t_flight2);
 		
 		RouteFinder finder = RouteFinder.of(testAirports);
 		
