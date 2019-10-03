@@ -78,9 +78,10 @@ final class RouteState
 	 */
 	void replaceNode(RouteNode _routeNode)
 	{
-		m_airportNode.replace(_routeNode.getAirport(), _routeNode);
+		Objects.requireNonNull(_routeNode, "Parameter cannot be null");
 		
-		m_unreached.remove(airportNode(_routeNode.getAirport()));
+		m_airportNode.replace(_routeNode.getAirport(), _routeNode);
+		removeUnreachedNode(airportNode(_routeNode.getAirport()));
 		m_unreached.add(_routeNode);
 	}
 	
@@ -116,5 +117,16 @@ final class RouteState
 		Objects.requireNonNull(_airport);
 		
 		return m_airportNode.get(_airport);
+	}
+	
+	/**
+	 * @brief removes a node from the set of unreached nodes
+	 * @param _node: RouteNode to be removed
+	 */
+	boolean removeUnreachedNode(RouteNode _node)
+	{
+		Objects.requireNonNull(_node, "Parameter cannot be null");
+		
+		return m_unreached.remove(_node);
 	}
 }

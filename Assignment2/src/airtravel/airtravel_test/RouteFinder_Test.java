@@ -157,7 +157,7 @@ class RouteFinder_Test
 		t_config4 = SeatConfiguration.of(t_seats4);
 		t_config5 = SeatConfiguration.of(t_seats5);
 		
-		t_flight1 = SimpleFlight.of(t_code1, t_leg1, t_schedule1, t_config1);
+		t_flight1 = SimpleFlight.of(t_code1, t_leg1, t_schedule1, t_config2);
 		t_flight2 = SimpleFlight.of(t_code1, t_leg2, t_schedule2, t_config2);
 		t_flight3 = SimpleFlight.of(t_code1, t_leg3, t_schedule3, t_config3);
 		t_flight4 = SimpleFlight.of(t_code2, t_leg4, t_schedule4, t_config4);

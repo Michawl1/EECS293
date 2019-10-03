@@ -26,6 +26,29 @@ public final class RouteFinder
 	}
 	
 	/**
+	 * 
+	 * @param _node
+	 * @param _fareClass
+	 * @param _state
+	 * @return a RouteState with the best flight option within the given RouteNode's flights
+	 */
+	private RouteState getBestFlightOption(RouteNode _node, FareClass _fareClass, RouteState _state)
+	{
+		RouteNode shortesRouteDestinationNode = RouteNode.of(_node.getAirport());
+		
+		for(Flight flight : _node.availableFlights(_fareClass))
+		{
+			if(new RouteTime(flight.arrivalTime()).compareTo(shortesRouteDestinationNode.getArrivalTime()) < 0)
+			{
+				shortesRouteDestinationNode = RouteNode.of(flight, null);
+				_state.replaceNode(shortesRouteDestinationNode);
+			}
+		}
+		
+		return _state;
+	}
+	
+	/**
 	 * @brief Builder method for @RouteFinder
 	 * @param _airports: a set of airports for routefinder
 	 * @return a constructed @RouteFinder object
@@ -59,32 +82,20 @@ public final class RouteFinder
 		RouteState state = RouteState.of(m_airports, _origin, _departureTime);
 		
 		RouteNode currentNode = RouteNode.of(_origin);
-		RouteNode destinationNode = RouteNode.of(_destination);
 		
 		while(!state.allReached())
 		{			
 			currentNode = state.closestUnreached();
 			
-			// TODO this doesn't do anything
-			state.replaceNode(currentNode);
-			
 			if(currentNode.getAirport().equals(_destination))
 			{
 				return currentNode;
 			}
-			
-			// TODO look at what your doing with destination
-			// destination of the flight not total destination
-			for(Flight flight : currentNode.availableFlights(_fareClass))
-			{
-				if(new RouteTime(flight.arrivalTime()).compareTo(destinationNode.getArrivalTime()) < 0)
-				{
-					destinationNode = RouteNode.of(flight, null);
-					//TODO want to add the best option to the state
-				}
-			}
+			state = getBestFlightOption(currentNode, _fareClass, state);
+			state.removeUnreachedNode(currentNode);
 		}
 		
 		return null;
 	}
+
 }
