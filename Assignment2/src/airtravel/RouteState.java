@@ -33,18 +33,22 @@ final class RouteState
 			Airport _origin, 
 			LocalTime _departureTime)
 	{
-		// TODO re look at this
 		m_airportNode = new LinkedHashMap<Airport, RouteNode>();
 		m_unreached = new TreeSet<>();
 		
-		RouteNode first = RouteNode.of(_origin, new RouteTime(_departureTime), null);
-		
-		m_airportNode.put(_origin, first);
-		
 		for(Airport airport : _airports)
 		{
-			m_airportNode.put(airport, RouteNode.of(airport));
-			m_unreached.add(RouteNode.of(airport));
+			if(airport.equals(_origin))
+			{
+				RouteNode temp = RouteNode.of(airport, new RouteTime(_departureTime), null);
+				m_airportNode.put(airport, temp);
+				m_unreached.add(temp);
+			}
+			else
+			{
+				m_airportNode.put(airport, RouteNode.of(airport));
+				m_unreached.add(RouteNode.of(airport));
+			}
 		}
 		
 	}
@@ -76,9 +80,8 @@ final class RouteState
 	{
 		m_airportNode.replace(_routeNode.getAirport(), _routeNode);
 		
-		// TODO add new node to unreached
-		// TODO want to remove the old node not the new node
-		m_unreached.remove(_routeNode);
+		m_unreached.remove(airportNode(_routeNode.getAirport()));
+		m_unreached.add(_routeNode);
 	}
 	
 	/**
@@ -100,19 +103,7 @@ final class RouteState
 			throw new NoSuchElementException("No such element exists");
 		}
 		
-		// TODO this gets the closest unreached node because how trees work (or last does)
-		RouteNode smallestTime = m_unreached.first();
-		
-		for(RouteNode node : m_unreached)
-		{
-			//smallestTime < node
-			if(smallestTime.compareTo(node) < 0)
-			{
-				smallestTime = node;
-			}
-		}
-		
-		return smallestTime;
+		return m_unreached.first();
 	}
 	
 	

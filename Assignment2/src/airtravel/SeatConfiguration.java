@@ -33,7 +33,7 @@ public final class SeatConfiguration
 			}
 		}
 		
-		m_seats = _seats;
+		m_seats = _seats.clone();
 	}
 	
 	/**
@@ -59,13 +59,7 @@ public final class SeatConfiguration
 	{
 		_seatConfig = Objects.requireNonNull(_seatConfig, "Parameters cannot be null");
 		
-		EnumMap<SeatClass, Integer> copyMap = new EnumMap<SeatClass, Integer>(SeatClass.class);
-		
-		for(SeatClass v : SeatClass.values())
-		{
-			copyMap.put(v, _seatConfig.seats(v));
-		}
-		return new SeatConfiguration(copyMap);	
+		return new SeatConfiguration(_seatConfig.m_seats);
 	}
 	
 	/**
@@ -94,7 +88,7 @@ public final class SeatConfiguration
 		}
 		
 		int previousSeats = m_seats.get(_seatClass).intValue();
-		m_seats.put(_seatClass, new Integer(_seats));
+		m_seats.put(_seatClass, _seats);
 		
 		return previousSeats;
 	}

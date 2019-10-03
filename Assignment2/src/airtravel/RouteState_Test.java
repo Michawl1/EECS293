@@ -177,7 +177,7 @@ class RouteState_Test
 	}
 	
 	@Test
-	void test() 
+	void routeState_closestUnreachedTest() 
 	{
 		testCreate();
 		
@@ -193,7 +193,15 @@ class RouteState_Test
 
 		RouteState testState = RouteState.of(testAirports, t_airport2, t_time1);
 		
-		assertEquals("Chi", testState.closestUnreached().getAirport().toString());
+		RouteNode test = RouteNode.of(t_airport1, t_routeTime1, null);
+		
+		testState.replaceNode(test);
+		
+		test = RouteNode.of(t_airport3, t_routeTime2, null);
+		
+		testState.replaceNode(test);
+		
+		assertEquals("Cle", testState.closestUnreached().getAirport().toString());
 		
 	}
 

@@ -11,6 +11,7 @@ package airtravel;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Objects;
+import java.lang.Boolean;
 
 public final class RouteTime implements Comparable<RouteTime>
 {
@@ -76,22 +77,13 @@ public final class RouteTime implements Comparable<RouteTime>
 	}
 	
 	@Override
-	public int compareTo(RouteTime arg0) 
+	public int compareTo(RouteTime _otherRoute) 
 	{		
-		//could do with boolean compareTo
-		if(!arg0.isKnown() && !this.isKnown()) 
+		if(!_otherRoute.isKnown() || !this.isKnown())
 		{
-			return 0;
-		}
-		else if(!this.isKnown())
-		{
-			return -1;
-		}
-		else if(!arg0.isKnown())
-		{
-			return 1;
+			return new Boolean(!this.isKnown()).compareTo(new Boolean(!_otherRoute.isKnown()));
 		}
 
-		return this.getTime().compareTo(arg0.m_routeTime);
+		return this.getTime().compareTo(_otherRoute.getTime());
 	}
 }

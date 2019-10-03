@@ -33,6 +33,19 @@ public final class FlightGroup
 	}
 	
 	/**
+	 * @param _flight: the flight compared to origin airport
+	 * @throws IllegaArgumentException if _flight origin is not equal to m_origin
+	 */
+	private void ValidateFlightOriginIsNotObjectOrigin(Flight _flight)
+	{
+		if(!_flight.getLeg().getOrigin().equals(m_origin))
+		{
+			throw new IllegalArgumentException("Flight " + _flight.getCode() + 
+					" does not originate from " + m_origin.getCode());
+		}
+	}
+	
+	/**
 	 * @brief Builder method for @FlightGroup class
 	 * @param[in] _origin: the origin airport
 	 * @returns A constructed FlightGroup object
@@ -61,12 +74,7 @@ public final class FlightGroup
 	public final boolean add(Flight _flight)
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
-		
-		if(!_flight.getLeg().getOrigin().equals(m_origin))
-		{
-			throw new IllegalArgumentException("Flight " + _flight.getCode() + 
-					" does not originate from " + m_origin.getCode());
-		}
+		ValidateFlightOriginIsNotObjectOrigin(_flight);
 		
 		Set<Flight> flightSet = new HashSet<Flight>();
 		
@@ -93,13 +101,7 @@ public final class FlightGroup
 	public final boolean remove(Flight _flight)
 	{
 		_flight = Objects.requireNonNull(_flight, "Parameter cannot be null");
-		
-		if(_flight.getLeg().getOrigin() != m_origin)
-		{
-			throw new IllegalArgumentException("Flight " + _flight.getCode() + 
-					" does not originate from " + m_origin.getCode());
-		}
-		
+		ValidateFlightOriginIsNotObjectOrigin(_flight);		
 
 		Set<Flight> flightSet = new HashSet<Flight>();
 		flightSet.add(_flight);

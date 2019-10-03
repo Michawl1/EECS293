@@ -90,6 +90,6 @@ public final class FlightSchedule
 		
 		Duration totalDuration = Duration.between(m_departureTime, m_arrivalTime);
 		
-		return _durationMax.compareTo(totalDuration) <= 0;
+		return _durationMax.compareTo(totalDuration) > 0;
 	}
 }

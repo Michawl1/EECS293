@@ -7,7 +7,6 @@
 
 package airtravel;
 
-import java.time.LocalTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -115,7 +114,7 @@ public final class RouteNode implements Comparable<RouteNode>
 	 */
 	public final Boolean isArrivalTimeKnown()
 	{
-		return !m_arrivalTime.equals(RouteTime.UNKNOWN);
+		return m_arrivalTime.isKnown();
 	}
 	
 	/**
@@ -125,17 +124,8 @@ public final class RouteNode implements Comparable<RouteNode>
 	public final RouteTime departureTime()
 	{
 		m_airport.getConnectionTimeMin();
-		// TODO RouteTime has a plus
 		
-		if(isArrivalTimeKnown())
-		{			
-			return new RouteTime(m_arrivalTime.getTime().plus(m_airport.getConnectionTimeMin()));
-		}
-		else
-		{
-			LocalTime temp = LocalTime.of(0, 0, 0, 0);
-			return new RouteTime(temp.plus(m_airport.getConnectionTimeMin())); //Return RouteTime.UNKNOWN
-		}
+		return m_arrivalTime.plus(m_airport.getConnectionTimeMin());
 	}
 	
 	/**
