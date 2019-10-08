@@ -4,33 +4,57 @@ MJT106
 
 This is the pseudo code outline of the Photo Schedule class
 
-photo schedule will have 1 variable to keep track of:
+photo schedule will have 3 variables to keep track of, all of which will be protected data:
 a priority queue containing Photo Times
-(a queue is a First In First Out type list)
-(a priority queue is a list of items that is ordered in accordance with some 
-value routine, an object with a higher value gets placed before an object with
-a lower value.  These value functions are described within the object that a 
-queue contains.  Any new object that is added into the priority queue will 
-automatically be sorted into it's correct position in accordance with said 
-value function)
+	(a queue is a First In First Out type list)
+	(a priority queue is a list of items that is ordered in accordance with some 
+	value routine, an object with a higher value gets placed before an object with
+	a lower value.  These value functions are described within the object that a 
+	queue contains.  Any new object that is added into the priority queue will 
+	automatically be sorted into it's correct position in accordance with said 
+	value function)
+a value to store the Start Time for the best lighting
+a value to store the End Time for the best lighting
 
-There will be a constructor that will accept a new priority queue and copy it
+There will be a constructor that will be protected
+it will accept a priority queue, starting time, and ending time
+	ensure that the starting time occurs before the ending time
+	(if they don't throw an error)
+	set this's priority queue to a copy of the provided priority queue
+	set this's start time to the given start time
+	set this's start time to the given start time
+
+There will be a builder that will accept a new priority queue and copy it
 to this Photo Schedule's priority queue
+it will also accept a value for Starting Time
+it will also accept a value for Ending Time
+	return a new Photo Schedule object with the priority queue, 
+	starting time, and ending time
 
-There will be a constructor that does not accept anything and will make
+There will be a builder that does not accept anything and will make
 an empty priority queue
+it will also accept a value for Starting Time
+it will also accept a value for Ending Time
+	return a new Photo Schedule object with a new, empty priority queue,
+	starting time, and ending time
 
 Photo Schedule will have a getter for it's priority queue
 
-
+*Add Photo Time*
 This routine will add a new Photo Time into the priority queue
-	Add the new Photo Time into this's priority queue
+	if the new Photo time has a start time and end time within the
+	Photo Schedule's start and end time for lighting
+		Add the new Photo Time into this's priority queue
+		return true
 
+	if not
+		return false
 
+*Remove Photo Time*
 This routine will remove a Photo Time from the priority queue
 	remove the given Photo Time from this's priority queue
 
-
+*Generate Schedule*
 This routine will generate the schedule of Photo Times to go to
 	use the greedy first search algorithm to get a list of Photo Times to 
 	go to

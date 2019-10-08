@@ -12,30 +12,62 @@ the start time for the photo shoot
 the end time for the photo shoot
 a representation of the priority (some digit)
 
-The constructor will set the values for the 4 variables listed above
+
+*There will be a constructor that will be protected
+-Input: a value for the landmark
+        a value for the start time
+        a value for the end time
+        a value for the priority
+This routine will make a new object
+	ensure that the start time occurs before the ending time
+	(if they don't throw an error)
+	set this's landmark to the given landmark
+	set this's start time to the given start time
+	set this's end time to the given end time
+	set this's priority to the given priority
+
+*There will be a builder
+-Input: a value for the landmark
+        a value for the start time
+        a value for the end time
+        a value for the priority
+-Output: a new Photo Time object
+This routine simply makes a new object and returns it
+	return a new Photo Time object with the landmark, start time, end time, and priority
+
 
 The photo time will have getters for the start time, end time, and priority
 
 
-This routine will get the time elapsed during the photo shoot
-	return the time it takes from the start of the photo shoot to the end of 
-	the photo shoot
+*Is Before*
+*This is an implementation of a Greedy First Searchable routine
+-Input: a photo time to compare to
+-Output: a true false statement
+This routine will return a true false statement to whether a given Photo Time
+occurs before this Photo Time's start time
+	return true if the new Photo Time's end time is before the beginning time of
+	this Photo Time
+	return false if the new Photo Time's end time is after the beginning time of this Photo Time
 
-
-*This is an implementation of the first Greedy First Searchable routine
-This routine will returns a true false statement to whether a given Photo Time
+*Is After*
+*This is an implementation of a Greedy First Searchable routine
+-Input: a photo time to compare to
+-Output: a true false statement
+This routine will return a true false statement to whether a given Photo Time
 occurs after this Photo Time's end time
 	return true if the new Photo Time's end time is after the beginning time of 
 	this Photo Time
-	return false if the new Photo Time's end time is before the beginning time of
-	this Photo Time
+	return false if the new Photo Time's end time is before the beginning time of this Photo Time
 
-
-*This is an implementation of the second Greedy First Searchable routine
+*Get Value*
+*This is an implementation of a Greedy First Searchable routine
+-Output: a digit value of the object
 This routine gets the value of the Photo Time
 	return the priority of the photo shoot
 
-
+*Compare*
+-Input: a photo time to compare to
+-Output: a numerical representation of how the two photo times compare
 This routine will be used to provide a way to sort the Photo Times
 	if this Photo Time's end time is before the new Photo Time's end time
 		we want to return 1
@@ -44,6 +76,7 @@ This routine will be used to provide a way to sort the Photo Times
 	if the end times are equal we want to defer to the priority
 		The higher priority is more valuable than the lower priority
 
-
+*To Sentece*
+-Output: a list of characters that represent the object
 This routine will be used to make a sentence describing the Photo Time
 	return the name of the landmark

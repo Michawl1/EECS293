@@ -2,7 +2,9 @@ Michael Thompson
 MJT106
 10/8/2019
 
-The Greedy First Search routine will require a priority queue (a queue sorted by some method) provided to it
+
+*Greedy First Search*
+This routine will require a priority queue (a queue sorted by some method) provided to it
 	there will be a list of best options called best options
 
 	first we will add the first item of the priority queue to the best options list
@@ -15,7 +17,7 @@ The Greedy First Search routine will require a priority queue (a queue sorted by
 
 		if the focus item is after the most recent addition to the queue's end time
 			add the focus item to the list
-		else 
+		if not 
 			add the focus item to an unused list
 
 	call the insert unused list routine
@@ -24,7 +26,7 @@ The Greedy First Search routine will require a priority queue (a queue sorted by
 
 
 This Greedy Fist Search routine will require a list of best options and a list of unused options
-	while there are items in the used list
+	while there are items in the unused list
 		remove the an unused item from the list and store it (we'll call it the focus item)
 
-		if the focus item
+		

@@ -1,0 +1,22 @@
+Michael Thompson
+MJT106
+10/8/2019
+
+This is the pseudo code outline of the Greedy First Searchable interface
+
+*Is Before*
+-Input: an object to compare to this to see if it is before
+-Output: a true false statement
+This routine will determine wheter or not the object occurs before this object
+	return true if the object occurs before this object, false otherwise
+
+*Is After*
+-Input: an object to compare to this to see if it is after
+-Output: a true false statement
+This routine will determine whether or not the object occurs after this object
+	return true if the object occurs after this object, false otherwise
+
+*Get Value*
+-Output: a digit value of the object
+This routine will get the value of a given object as some digit
+	return the some enumeratable value of the object
