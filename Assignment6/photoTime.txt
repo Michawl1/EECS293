@@ -1,0 +1,49 @@
+Michael Thompson
+MJT106
+10/8/2019
+
+This is the pseudo code outline of the Photo Time class
+
+Photo Time will implement the interface Greedy First Searchable
+
+photo time will have 4 variables to keep track of:
+a name for the landmark
+the start time for the photo shoot
+the end time for the photo shoot
+a representation of the priority (some digit)
+
+The constructor will set the values for the 4 variables listed above
+
+The photo time will have getters for the start time, end time, and priority
+
+
+This routine will get the time elapsed during the photo shoot
+	return the time it takes from the start of the photo shoot to the end of 
+	the photo shoot
+
+
+*This is an implementation of the first Greedy First Searchable routine
+This routine will returns a true false statement to whether a given Photo Time
+occurs after this Photo Time's end time
+	return true if the new Photo Time's end time is after the beginning time of 
+	this Photo Time
+	return false if the new Photo Time's end time is before the beginning time of
+	this Photo Time
+
+
+*This is an implementation of the second Greedy First Searchable routine
+This routine gets the value of the Photo Time
+	return the priority of the photo shoot
+
+
+This routine will be used to provide a way to sort the Photo Times
+	if this Photo Time's end time is before the new Photo Time's end time
+		we want to return 1
+	if this Photo Time's end time is after the new Photo Time's end time
+		we want to return -1
+	if the end times are equal we want to defer to the priority
+		The higher priority is more valuable than the lower priority
+
+
+This routine will be used to make a sentence describing the Photo Time
+	return the name of the landmark

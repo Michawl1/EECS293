@@ -1,0 +1,11 @@
+Michael Thompson
+MJT106
+10/8/2019
+
+This is the pseudo code outline of the Greedy First Searchable interface
+
+This routine will determine whether or not the object occurs after this object
+	return true if the object occurs after this object, false otherwise
+
+This routine will get the value of a given object as some digit
+	return the some enumeratable value of the object

@@ -1,0 +1,30 @@
+Michael Thompson
+MJT106
+10/8/2019
+
+The Greedy First Search routine will require a priority queue (a queue sorted by some method) provided to it
+	there will be a list of best options called best options
+
+	first we will add the first item of the priority queue to the best options list
+	this is the greedy assumption we make for this algorithm
+
+	while there are still items in the priority queue
+		get the new item off of the queue
+		(this shall remove an item from the queue)
+		for readablitiy this item will be called the focus item
+
+		if the focus item is after the most recent addition to the queue's end time
+			add the focus item to the list
+		else 
+			add the focus item to an unused list
+
+	call the insert unused list routine
+				
+	return the best options list
+
+
+This Greedy Fist Search routine will require a list of best options and a list of unused options
+	while there are items in the used list
+		remove the an unused item from the list and store it (we'll call it the focus item)
+
+		if the focus item

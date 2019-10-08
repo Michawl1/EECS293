@@ -1,0 +1,38 @@
+Michael Thompson
+MJT106
+10/8/2019
+
+This is the pseudo code outline of the Photo Schedule class
+
+photo schedule will have 1 variable to keep track of:
+a priority queue containing Photo Times
+(a queue is a First In First Out type list)
+(a priority queue is a list of items that is ordered in accordance with some 
+value routine, an object with a higher value gets placed before an object with
+a lower value.  These value functions are described within the object that a 
+queue contains.  Any new object that is added into the priority queue will 
+automatically be sorted into it's correct position in accordance with said 
+value function)
+
+There will be a constructor that will accept a new priority queue and copy it
+to this Photo Schedule's priority queue
+
+There will be a constructor that does not accept anything and will make
+an empty priority queue
+
+Photo Schedule will have a getter for it's priority queue
+
+
+This routine will add a new Photo Time into the priority queue
+	Add the new Photo Time into this's priority queue
+
+
+This routine will remove a Photo Time from the priority queue
+	remove the given Photo Time from this's priority queue
+
+
+This routine will generate the schedule of Photo Times to go to
+	use the greedy first search algorithm to get a list of Photo Times to 
+	go to
+
+	return the generated list of Photo Times
