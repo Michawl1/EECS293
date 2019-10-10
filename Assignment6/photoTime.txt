@@ -137,7 +137,7 @@ This routine will be used to provide a way to sort the Photo Times
 }
 
 
-*To Sentece*
+*To String*
 -Output: a list of characters that represent the item
 This routine will be used to make a sentence describing the Photo Time
 {
