@@ -1,0 +1,288 @@
+Michael Thompson
+MJT106
+10/10/2019
+
+Runtime Analysis:
+	The weighted job scheduling algorithm's runtime is calculated from the following:
+
+	nested for loops [O(N^2)] to generate the best value list and create the linked list
+
+	a for loop [O(N)] to get the maximum value within the list
+
+	a while loop to traverse the linked list [O(N)] 
+
+	a while loop to reverse stack into a list [O(N)]
+
+	total run time = [O(N^2)] + [O(N)] + [O(N)] + [O(N)] 
+	=[O(N^2)]
+
+Scenario
+	suppose we have the priority queue passed in as such
+
+	(focus list)
+	| A | B | C | D | E | -> name
+	---------------------
+    | 1 | 1 | 3 | 3 | 4 | -> start time
+    ---------------------
+    | 2 | 3 | 4 | 4 | 5 | -> end time
+    ---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> priority
+      j   i
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> value
+
+    first, i would start at the second index of the list and go through all previous options to see what is better
+
+    item B overlaps with A so nothing would happen this iteration
+
+--------------------------------------------------------------------------------------------------------------------
+
+    (focus list)
+	| A | B | C | D | E | -> name
+	---------------------
+    | 1 | 1 | 3 | 3 | 4 | -> start time
+    ---------------------
+    | 2 | 3 | 4 | 4 | 5 | -> end time
+    ---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> priority
+      j       i
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> value
+      j
+
+    next, i would move the third index of the list and go through all previous options to see what is better
+
+    item A does not overlap with C so the value list at C is changed to the sum of A + C:
+    
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 2 | 3 | -> value
+      j
+
+    A is then linked to C
+
+
+
+    j is moved up an index to check B
+
+    (focus list)
+	| A | B | C | D | E | -> name
+	---------------------
+    | 1 | 1 | 3 | 3 | 4 | -> start time
+    ---------------------
+    | 2 | 3 | 4 | 4 | 5 | -> end time
+    ---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> priority
+          j   i
+
+    B does not over lap with C, but the sum of B's and C's priority is not greater than C's value (9)
+    so we do nothing
+
+--------------------------------------------------------------------------------------------------------------------
+
+    (focus list)
+	| A | B | C | D | E | -> name
+	---------------------
+    | 1 | 1 | 3 | 3 | 4 | -> start time
+    ---------------------
+    | 2 | 3 | 4 | 4 | 5 | -> end time
+    ---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> priority
+      j           i
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 2 | 3 | -> value
+      j
+
+    i moves over again
+
+    D is does not overlap A so A's value gets added to D's
+   
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 7 | 3 | -> value
+      j
+
+    A is then linked to D
+
+
+
+    j moves over
+
+    (focus list)
+	| A | B | C | D | E | -> name
+	---------------------
+    | 1 | 1 | 3 | 3 | 4 | -> start time
+    ---------------------
+    | 2 | 3 | 4 | 4 | 5 | -> end time
+    ---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> priority
+          j       i
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 7 | 3 | -> value
+          j
+
+    B does not overlap with D, but the sum of B's and D's priority isn not gerater than D's value (7)
+    so we do nothing
+
+
+
+    j moves over
+   
+    (focus list)
+	| A | B | C | D | E | -> name
+	---------------------
+    | 1 | 1 | 3 | 3 | 4 | -> start time
+    ---------------------
+    | 2 | 3 | 4 | 4 | 5 | -> end time
+    ---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> priority
+              j   i
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 7 | 3 | -> value
+              j
+
+    C overlaps D so we do nothing
+
+--------------------------------------------------------------------------------------------------------------------
+
+    (focus list)
+	| A | B | C | D | E | -> name
+	---------------------
+    | 1 | 1 | 3 | 3 | 4 | -> start time
+    ---------------------
+    | 2 | 3 | 4 | 4 | 5 | -> end time
+    ---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> priority
+      j               i
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 7 | 3 | -> value
+      j
+
+    finally i moves over 1 last time
+
+    A does not overlap E so E's value is set to the sum
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 7 | 8 | -> value
+      j
+
+    E is linked to A
+
+
+
+    j moves over
+
+    (focus list)
+	| A | B | C | D | E | -> name
+	---------------------
+    | 1 | 1 | 3 | 3 | 4 | -> start time
+    ---------------------
+    | 2 | 3 | 4 | 4 | 5 | -> end time
+    ---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> priority
+          j           i
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 7 | 8 | -> value
+          j
+
+    B does not overlap with E, but the sum of B's and E's priority isn not gerater than E's value (8)
+    so we do nothing
+
+
+
+    j moves over
+
+    (focus list)
+	| A | B | C | D | E | -> name
+	---------------------
+    | 1 | 1 | 3 | 3 | 4 | -> start time
+    ---------------------
+    | 2 | 3 | 4 | 4 | 5 | -> end time
+    ---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> priority
+              j       i
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 7 | 8 | -> value
+              j
+
+    C does not overlap with E so we set E's value to the sum of E's priority and C's value (9 + 3)
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 7 | 12 | -> value
+              j
+
+    E is linked to C
+
+
+
+    j moves over
+
+    (focus list)
+	| A | B | C | D | E | -> name
+	---------------------
+    | 1 | 1 | 3 | 3 | 4 | -> start time
+    ---------------------
+    | 2 | 3 | 4 | 4 | 5 | -> end time
+    ---------------------
+    | 5 | 5 | 4 | 2 | 3 | -> priority
+                  j   i
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 7 | 12 | -> value
+                  j
+
+    D does not overlap with E, but the sum of D's value (7) and E's priority (3) is less than E's current value (12)
+    so we do nothing
+
+    --------------------------------------------------------------------------------------------------------------------
+
+    We find the item with the highest value in the value list
+
+    (value list)
+    | A | B | C | D | E | -> name
+	---------------------
+    | 5 | 5 | 9 | 7 | 12 | -> value
+
+    In this case the answer is E
+
+    We then look back through E's linked list with E as the starting node
+
+    E -> C -> A
+
+    Reverse the list
+
+    A -> C -> E
+
+    This is the most optimal schedule within the provided lists

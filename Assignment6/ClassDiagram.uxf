@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>100</x>
-      <y>950</y>
+      <y>710</y>
       <w>320</w>
       <h>550</h>
     </coordinates>
@@ -51,7 +51,7 @@ _   ) : PhotoTime_
     <id>UMLClass</id>
     <coordinates>
       <x>660</x>
-      <y>350</y>
+      <y>110</y>
       <w>400</w>
       <h>390</h>
     </coordinates>
@@ -86,12 +86,13 @@ _   ) : PhotoSchedule_
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>580</y>
+      <y>330</y>
       <w>610</w>
-      <h>90</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>WeightedJobScheduler
 --
+_- linkBestOption(_valueList : List&lt;Integer&gt;, _focusList : List&lt;WeightedJobSchedulable&gt;, _endIndex int)_
 _- getMaxValueIndex(_valueList : List&lt;Integer&gt;) : Integer_
 _- getWeightedSchedule(_focusList : List&lt;WeightedJobSchedulable&gt;, _maxIndex : Integer) : List_
 _+ greedyFirstSearch(_priorityQueue : PriorityQueue&lt;WeightedJobSchedulable &gt;) : List_</panel_attributes>
@@ -101,7 +102,7 @@ _+ greedyFirstSearch(_priorityQueue : PriorityQueue&lt;WeightedJobSchedulable &g
     <id>UMLClass</id>
     <coordinates>
       <x>160</x>
-      <y>750</y>
+      <y>510</y>
       <w>220</w>
       <h>110</h>
     </coordinates>
@@ -118,7 +119,7 @@ linkObject(Object o)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>250</x>
-      <y>850</y>
+      <y>610</y>
       <w>30</w>
       <h>120</h>
     </coordinates>
@@ -129,7 +130,7 @@ linkObject(Object o)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>250</x>
-      <y>730</y>
+      <y>490</y>
       <w>620</w>
       <h>240</h>
     </coordinates>
@@ -140,7 +141,7 @@ linkObject(Object o)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>250</x>
-      <y>660</y>
+      <y>420</y>
       <w>30</w>
       <h>110</h>
     </coordinates>
@@ -151,7 +152,7 @@ linkObject(Object o)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>250</x>
-      <y>680</y>
+      <y>440</y>
       <w>30</w>
       <h>90</h>
     </coordinates>
@@ -162,7 +163,7 @@ linkObject(Object o)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>300</x>
-      <y>660</y>
+      <y>420</y>
       <w>570</w>
       <h>140</h>
     </coordinates>

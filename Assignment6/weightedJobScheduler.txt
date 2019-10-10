@@ -2,6 +2,32 @@ Michael Thompson
 MJT106
 10/8/2019
 
+This is the pseudo code outline of the weighted job scheduler routines
+
+
+*Link Best Option* this is protected
+-Input: the value list from @*Weighted Job Scheduling*
+		the focus list from @*Weighted Job Scheduling*
+		the ending index
+This routine finds the best value option that occurs before index and links it to 
+the item in the focus list at the index
+Both the value list and the focus list need to be pass by reference so they can be 
+manipulated within this routine
+{
+	for each item J starting from spot 1 (inclusive) in the focus list until the 
+	index (non inclusive)
+	{
+		if focus list at ending index does not overlap item J 
+		and if Value List at ending index spot + Value List at J spot is greater 
+		than Value List at ending index spot
+		{
+			value list at spot ending index -> ending index *Get Value* + J *Get Value*
+
+			focus list at ending index *Link Object* to J
+		}
+	}
+}
+
 
 *Get Max Value Index* this is protected
 -Input: the value list from @*Weighted Job Scheduling*
@@ -62,16 +88,7 @@ schedule to follow
 
 	for each item I in the focus list starting from the 2nd spot
 	{
-		for each item J starting from spot 1 (inclusive) in the focus list until item I (non inclusive)
-		{
-			if item I does not overlap item J 
-			and if Value List at I spot + Value List at J spot is greater than Value List at I spot
-			{
-				value list at spot I -> I *Get Value* + J *Get Value*
-
-				Item I *Link Object* to J
-			}
-		}
+		*Link Best Option* value list, focus list, index of I
 	}
 	
 	return the result of *Get Weighted Schedule*
