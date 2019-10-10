@@ -1,0 +1,26 @@
+Michael Thompson
+MJT106
+10/8/2019
+
+This is the pseudo code outline of the Greedy First Searchable interface
+
+*Get Value*
+-Output: a digit value of the object
+This routine will get the value of a given object as some digit
+	return the some enumeratable value of the object
+
+*Get Linked Object*
+-Output: the linked item if its avaiable, null if there is none
+This routine is meant to back through the linked list
+
+*Does Overlap*
+-Input: an object to compare to this to see if it is after
+-Output: a true false statement
+This routine will determine whether or not the object's time frame overlaps 
+this object's time frame
+	return true if the objects time overlap, false otherwise
+
+*Link Object*
+-Input: a different Weighted Job Shedulable item
+This routine acts as a way to create a linked list within the implementation
+so that it can be traced back through later

@@ -6,11 +6,12 @@ This is the pseudo code outline of the Photo Time class
 
 Photo Time will implement the interface Greedy First Searchable
 
-photo time will have 4 variables to keep track of:
-a name for the landmark
-the start time for the photo shoot
-the end time for the photo shoot
-a representation of the priority (some digit)
+photo time will have 5 variables to keep track of:
+~a name for the landmark
+~the start time for the photo shoot
+~the end time for the photo shoot
+~a representation of the priority (some digit)
+~another Photo Time to work as a linked list
 
 
 *There will be a constructor that will be protected
@@ -18,65 +19,127 @@ a representation of the priority (some digit)
         a value for the start time
         a value for the end time
         a value for the priority
-This routine will make a new object
+This routine will make a new item
+{
 	ensure that the start time occurs before the ending time
 	(if they don't throw an error)
+
 	set this's landmark to the given landmark
 	set this's start time to the given start time
 	set this's end time to the given end time
 	set this's priority to the given priority
+	set this's Photo Time to null
+}
+
 
 *There will be a builder
 -Input: a value for the landmark
         a value for the start time
         a value for the end time
-        a value for the priority
--Output: a new Photo Time object
-This routine simply makes a new object and returns it
-	return a new Photo Time object with the landmark, start time, end time, and priority
+        an integer value for the priority
+-Output: a new Photo Time item
+This routine simply makes a new item and returns it
+{
+	ensure inputs are not null
+
+	return a new Photo Time item with the landmark, start time, end time, and priority
+}
 
 
-The photo time will have getters for the start time, end time, and priority
+*There will be a bulder
+-Input: a value for the landmark
+        an integer value for the start time
+        an integer value for the end time
+        an integer value for the priority
+-Output: a new Photo Time item
+{
+	ensure inputs are not null
+
+	convert the integer value for start time into a local time
+	convert the integer value for end time into a local time
+
+	return a new Photo Time item with the landmark, start time, end time, and priority
+}
 
 
-*Is Before*
-*This is an implementation of a Greedy First Searchable routine
--Input: a photo time to compare to
--Output: a true false statement
-This routine will return a true false statement to whether a given Photo Time
-occurs before this Photo Time's start time
-	return true if the new Photo Time's end time is before the beginning time of
-	this Photo Time
-	return false if the new Photo Time's end time is after the beginning time of this Photo Time
+*The photo time will have getters for the start time and end time*
 
-*Is After*
-*This is an implementation of a Greedy First Searchable routine
--Input: a photo time to compare to
--Output: a true false statement
-This routine will return a true false statement to whether a given Photo Time
-occurs after this Photo Time's end time
-	return true if the new Photo Time's end time is after the beginning time of 
-	this Photo Time
-	return false if the new Photo Time's end time is before the beginning time of this Photo Time
 
 *Get Value*
-*This is an implementation of a Greedy First Searchable routine
--Output: a digit value of the object
+~This is an implementation of a Weighted Job Schedulable routine
+-Output: a digit value of the item
 This routine gets the value of the Photo Time
-	return the priority of the photo shoot
+{
+	return the priority of the photo time
+}
+
+
+*Get Linked Object*
+~This is an implementation of a Weighted Job Schedulable routine
+-Output: the linked item if its avaiable, null if there is none
+This routine is meant to back through the linked list
+{
+	return this's photo time variable
+}
+
+
+*Does Overlap*
+~This is an implementation of a Weighted Job Schedulable routine
+-Input: an item to compare to this to see if it is after
+-Output: a true false statement
+This routine checks to if two photo times overlap
+{
+	ensure inputs are not null
+
+	ensure that the provided item is also a photo time
+	throw an error if the new item is not a photo time
+
+	if this Photo Time's end time is after the new Photo Time's start time
+	or if this Photo Time's start time is before the new Photo Time's end time
+	{
+		return True
+	}
+	if not
+	{
+		return false
+	}
+}
+
+
+*Link Object*
+~This is an implementation of a Weighted Job Schedulable routine
+-Input: a different Weighted Job Shedulable item
+This routine acts as a way to create a linked list within the implementation
+so that it can be traced back through later
+{
+	ensure inputs are not null
+
+	ensure that the provided item is also a photo time
+	throw an error if the new item is not a photo time
+
+	set this's photo time variable to the provided photo time
+}
+
 
 *Compare*
 -Input: a photo time to compare to
 -Output: a numerical representation of how the two photo times compare
 This routine will be used to provide a way to sort the Photo Times
+{
 	if this Photo Time's end time is before the new Photo Time's end time
 		we want to return 1
 	if this Photo Time's end time is after the new Photo Time's end time
 		we want to return -1
 	if the end times are equal we want to defer to the priority
 		The higher priority is more valuable than the lower priority
+	if both end times and priorities are equal
+		return 0
+}
+
 
 *To Sentece*
--Output: a list of characters that represent the object
+-Output: a list of characters that represent the item
 This routine will be used to make a sentence describing the Photo Time
+{
 	return the name of the landmark
+}
