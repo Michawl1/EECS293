@@ -21,7 +21,7 @@ manipulated within this routine
 		and if Value List at ending index spot + Value List at J spot is greater 
 		than Value List at ending index spot
 		{
-			value list at spot ending index -> ending index *Get Value* + J *Get Value*
+			value list at spot ending index -> focus list at ending index *Get Value* + value list at J
 
 			focus list at ending index *Link Object* to J
 		}

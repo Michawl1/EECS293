@@ -16,6 +16,11 @@ Runtime Analysis:
 	total run time = [O(N^2)] + [O(N)] + [O(N)] + [O(N)] 
 	=[O(N^2)]
 
+Justification:
+	A proof for weighted interval scheduling can be found here:
+
+	http://www.cs.cornell.edu/courses/cs482/2007su/dynamic.pdf
+
 Scenario
 	suppose we have the priority queue passed in as such
 
