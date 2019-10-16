@@ -29,7 +29,7 @@ manipulated within this routine
 }
 
 
-*Get Max Value Index* this is protected
+*Generate Max Value Index* this is protected
 -Input: the value list from @*Weighted Job Scheduling*
 -Output: the index of the maximum value within the value list
 This routine goes through the value list and returns the index of the maximum value
@@ -50,37 +50,38 @@ This routine goes through the value list and returns the index of the maximum va
 }
 
 
-*Get Weighted Schedule* this is protected
+*Generate Weighted Schedule* this is protected
 -Input: the focus list from @*Weighted Job Scehduling*
 		the maximum value index
 -Output: a list containing the best schedule
 This routine takes the focus list and backwards traverses it to construct the best
 schedule to follow
 {
-	make a stack of items (a list that is first in last out) to traverse the linked list
-
-	max value index -> *Get Max Value Index*
-
-	add the max value index of the focus list to the stack
+	create a list of items
 
 	set the Max Value Index of the focus list to P
+
+	add p to the list
+
 	while the *Get Linked Object* of P does not return a null
 	{
 		set P to *Get Linked Object*
 		add P to the stack
 	}
 	
-	return the list of items by removing each item from the stack
+	return the list but reversed
 }
 
 
 *Weighted Job Scheduling*
--Input: a priority queue (a queue sorted by some method) provided to it
--Output: a list that contains the most valuable schedule from the priority queue
-**The items that the priority queue is comprised of must implement the routines in the 
+-Input: a sorted set (a queue sorted by some method) provided to it
+-Output: a list that contains the most valuable schedule from the sorted set
+**The items that the sorted set is comprised of must implement the routines in the 
   weighted job schedulable description in order for this routine to function properly
 {
-	take the priority queue and put it into a list of the items, we'll call that list
+	ensure parameters are not null
+
+	take the sorted set and put it into a list of the items, we'll call that list
 	the focus list
 
 	make another list the same size as the focus list and fill it with the value's of each

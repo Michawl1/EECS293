@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>16</zoom_level>
+  <zoom_level>14</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>240</x>
-      <y>960</y>
-      <w>512</w>
-      <h>880</h>
+      <x>238</x>
+      <y>882</y>
+      <w>448</w>
+      <h>770</h>
     </coordinates>
     <panel_attributes>PhotoTime
 --
@@ -39,9 +39,9 @@ _   ) : PhotoTime_
 + getStartTime() : LocalTime
 + getEndTime() : LocalTime
 + getValue() : Integer
-+ getLinkedObject() : Object
++ getLinkedObject() : WeightedJobSchedulable
 + doesOverlap(Object o) : boolean
-+ linkeObject(Object o) 
++ linkeObject(WeightedJobSchedulable o) 
 + compareTo() : int
 + toString() : String
 </panel_attributes>
@@ -50,20 +50,20 @@ _   ) : PhotoTime_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1136</x>
-      <y>0</y>
-      <w>640</w>
-      <h>624</h>
+      <x>1022</x>
+      <y>42</y>
+      <w>560</w>
+      <h>546</h>
     </coordinates>
     <panel_attributes>PhotoSchedule
 --
-- PriorityQueue&lt;PhotoTime&gt; m_photoTimes
+- SortedSet&lt;WeightedJobSchedulable&gt; m_photoTimes
 - LocalTime m_startTime
 - LocalTime m_endTime
 --
 - PhotoSchedule(
-   _photoTimes : PriorityQueue&lt;PhotoTime&gt;,
-   _starTime : LocalTime,
+   _photoTimes : SortedSet&lt;PhotoTime&gt;,
+   _startTime : LocalTime,
    _endTime : LocalTime)
    
 _+ of (_
@@ -71,12 +71,12 @@ _   _startTime : LocalTime,_
 _   _endTime : LocalTime_
 _   ) : PhotoSchedule_
 _+ of (_
-_   _photoTimes : PriorityQueue&lt;PhotoTime&gt;,_
+_   _photoTimes : SortedSet&lt;PhotoTime&gt;,_
 _   _startTime : LocalTime,_
 _   _endTime : LocalTime_
 _   ) : PhotoSchedule_
 
-+ getPhotoTimes() : PriorityQueue&lt;PhotoTime&gt;
++ getPhotoTimes() : SortedSet&lt;WeightedJobSchedulable&gt;
 + addPhotoTime(_photo : PhotoTime) : boolean
 + removePhotoTime(_photo : PhotoTime)
 + generateSchedule() : List</panel_attributes>
@@ -85,43 +85,43 @@ _   ) : PhotoSchedule_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>352</y>
-      <w>1056</w>
-      <h>160</h>
+      <x>28</x>
+      <y>350</y>
+      <w>924</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>WeightedJobScheduler
 --
 _- linkBestOption(_valueList : List&lt;Integer&gt;, _focusList : List&lt;WeightedJobSchedulable&gt;, _endIndex int)_
-_- getMaxValueIndex(_valueList : List&lt;Integer&gt;) : Integer_
-_- getWeightedSchedule(_focusList : List&lt;WeightedJobSchedulable&gt;, _maxIndex : Integer) : List_
-_+ greedyFirstSearch(_priorityQueue : PriorityQueue&lt;WeightedJobSchedulable &gt;) : List_</panel_attributes>
+_- generateMaxValueIndex(_valueList : List&lt;Integer&gt;) : Integer_
+_- generateWeightedSchedule(_focusList : List&lt;WeightedJobSchedulable&gt;, _maxIndex : Integer) : List_
+_+ weightedJobScheduling(_sortedSet : sortedSet&lt;WeightedJobSchedulable &gt;) : List_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>336</x>
-      <y>640</y>
-      <w>352</w>
-      <h>176</h>
+      <x>322</x>
+      <y>602</y>
+      <w>308</w>
+      <h>154</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
 WeightedJobSchedulable
 --
 getValue() : Integer
-getLinkedObject() : Object
+getLinkedObject() : WeightedJobSchedulable
 doesOverlap(Object o) : boolean
-linkObject(Object o)</panel_attributes>
+linkObject(WeightedJobSchedulable o)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>800</y>
-      <w>48</w>
-      <h>192</h>
+      <x>448</x>
+      <y>742</y>
+      <w>42</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
@@ -129,10 +129,10 @@ linkObject(Object o)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>608</y>
-      <w>992</w>
-      <h>384</h>
+      <x>448</x>
+      <y>574</y>
+      <w>868</w>
+      <h>336</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
     <additional_attributes>600.0;10.0;600.0;170.0;10.0;170.0;10.0;220.0</additional_attributes>
@@ -140,10 +140,10 @@ linkObject(Object o)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>496</y>
-      <w>48</w>
-      <h>176</h>
+      <x>448</x>
+      <y>476</y>
+      <w>42</w>
+      <h>154</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
@@ -151,10 +151,10 @@ linkObject(Object o)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>528</y>
-      <w>48</w>
-      <h>144</h>
+      <x>448</x>
+      <y>504</y>
+      <w>42</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
@@ -162,10 +162,10 @@ linkObject(Object o)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
-      <y>496</y>
-      <w>912</w>
-      <h>224</h>
+      <x>518</x>
+      <y>476</y>
+      <w>798</w>
+      <h>196</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
     <additional_attributes>550.0;80.0;550.0;120.0;230.0;120.0;230.0;70.0;10.0;70.0;10.0;10.0</additional_attributes>

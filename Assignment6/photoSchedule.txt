@@ -5,9 +5,8 @@ MJT106
 This is the pseudo code outline of the Photo Schedule class
 
 photo schedule will have 3 variables to keep track of, all of which will be protected data:
-~a priority queue containing Photo Times
-	(a queue is a First In First Out type list) //want this as a sorte list
-	(a priority queue is a list of items that is ordered in accordance with some 
+~a sorted set containing Photo Times
+	(a sorted set is a list of items that is ordered in accordance with some 
 	value routine, an object with a higher value gets placed before an object with
 	a lower value.  These value functions are described within the object that a 
 	queue contains.  Any new object that is added into the priority queue will 
