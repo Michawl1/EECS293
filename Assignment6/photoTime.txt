@@ -127,9 +127,9 @@ so that it can be traced back through later
 This routine will be used to provide a way to sort the Photo Times
 {
 	if this Photo Time's end time is before the new Photo Time's end time
-		we want to return 1
-	if this Photo Time's end time is after the new Photo Time's end time
 		we want to return -1
+	if this Photo Time's end time is after the new Photo Time's end time
+		we want to return 1
 	if the end times are equal we want to defer to the priority
 		The higher priority is more valuable than the lower priority
 	if both end times and priorities are equal
