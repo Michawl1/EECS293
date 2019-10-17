@@ -9,7 +9,7 @@ photo schedule will have 3 variables to keep track of, all of which will be prot
 	(a sorted set is a list of items that is ordered in accordance with some 
 	value routine, an object with a higher value gets placed before an object with
 	a lower value.  These value functions are described within the object that a 
-	queue contains.  Any new object that is added into the priority queue will 
+	queue contains.  Any new object that is added into the sorted set will 
 	automatically be sorted into it's correct position in accordance with said 
 	value function)
 ~a value to store the Start Time for the best lighting
@@ -17,7 +17,7 @@ photo schedule will have 3 variables to keep track of, all of which will be prot
 
 
 *There will be a constructor that will be protected
--Input: a priority queue
+-Input: a sorted set
 		a value for start time
 		a value for end time
 This routine is meant to initialize all the variables within this Photo Schedule
@@ -25,8 +25,8 @@ This routine is meant to initialize all the variables within this Photo Schedule
 	ensure that the starting time occurs before the ending time
 	(if they don't throw an error)
 
-	set this's priority to an empty priority queue
-	for every item phototime in the provided priority queue
+	set this's priority to an empty sorted set
+	for every item phototime in the provided sorted set
 	{
 		*Add Photo Time* phototime
 	}
@@ -37,44 +37,44 @@ This routine is meant to initialize all the variables within this Photo Schedule
 
 
 *There will be a builder 
--Input: a new priority queue
+-Input: a new sorted set
 	   a value for Starting Time
        a value for Ending Time
 {
 	ensure inputs are not null
 
-	return a new Photo Schedule object with the priority queue, 
+	return a new Photo Schedule object with the sorted set, 
 	starting time, and ending time
 }
 
 
 *There will be a builder
--Input: an empty priority queue
+-Input: an empty sorted set
 	    a value for Starting Time
         a value for Ending Time
 -Output: a Photo Schedule
 {
 	ensure inputs are not null
 
-	return a new Photo Schedule object with a new, empty priority queue,
+	return a new Photo Schedule object with a new, empty sorted set,
 	starting time, and ending time
 }
 
 
-*Photo Schedule will have a getter for it's priority queue*
+*Photo Schedule will have a getter for it's sorted set*
 
 
 *Add Photo Time*
--Input: a Photo Time to add to the priority queue
+-Input: a Photo Time to add to the sorted set
 -Output: a true false statement
-This routine will add a new Photo Time into the priority queue
+This routine will add a new Photo Time into the sorted set
 {
 	ensure inputs are not null
 
 	if the new Photo time has a start time and end time within the
 	Photo Schedule's start and end time for lighting
 	{
-		Add the new Photo Time into this's priority queue
+		Add the new Photo Time into this's sorted set
 		return true
 	}
 	if not
@@ -85,12 +85,12 @@ This routine will add a new Photo Time into the priority queue
 
 
 *Remove Photo Time*
--Input: a Photo Time to remove from the priority queue
-This routine will remove a Photo Time from the priority queue
+-Input: a Photo Time to remove from the sorted set
+This routine will remove a Photo Time from the sorted set
 {
 	ensure inputs are not null
 
-	remove the given Photo Time from this's priority queue
+	remove the given Photo Time from this's sorted set
 }
 
 

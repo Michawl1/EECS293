@@ -18,7 +18,7 @@ manipulated within this routine
 	index (non inclusive)
 	{
 		if focus list at ending index does not overlap item J 
-		and if Value List at ending index spot + Value List at J spot is greater 
+		and if focus list value at ending index spot + Value List at J spot is greater 
 		than Value List at ending index spot
 		{
 			value list at spot ending index -> focus list at ending index *Get Value* + value list at J
@@ -74,7 +74,7 @@ schedule to follow
 
 
 *Weighted Job Scheduling*
--Input: a sorted set (a queue sorted by some method) provided to it
+-Input: a sorted set (a set sorted by some method) provided to it
 -Output: a list that contains the most valuable schedule from the sorted set
 **The items that the sorted set is comprised of must implement the routines in the 
   weighted job schedulable description in order for this routine to function properly

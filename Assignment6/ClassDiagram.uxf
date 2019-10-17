@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>238</x>
-      <y>882</y>
+      <x>420</x>
+      <y>1246</y>
       <w>448</w>
       <h>770</h>
     </coordinates>
@@ -17,7 +17,7 @@
 - Integer m_priority
 - PhotoTime m_linkedPhotoTime
 --
-- PhotoSchedule(
+- PhotoTime(
    _landMark : String,
    _startTime : LocalTime,
    _endTime : LocalTime,
@@ -40,9 +40,9 @@ _   ) : PhotoTime_
 + getEndTime() : LocalTime
 + getValue() : Integer
 + getLinkedObject() : WeightedJobSchedulable
-+ doesOverlap(Object o) : boolean
-+ linkeObject(WeightedJobSchedulable o) 
-+ compareTo() : int
++ doesOverlap(Object _otherObject) : boolean
++ linkeObject(WeightedJobSchedulable _newLink) 
++ compareTo(PhotoTime _otherPhotoTime) : int
 + toString() : String
 </panel_attributes>
     <additional_attributes/>
@@ -50,8 +50,8 @@ _   ) : PhotoTime_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1022</x>
-      <y>42</y>
+      <x>1204</x>
+      <y>406</y>
       <w>560</w>
       <h>546</h>
     </coordinates>
@@ -85,25 +85,25 @@ _   ) : PhotoSchedule_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>28</x>
-      <y>350</y>
-      <w>924</w>
+      <x>0</x>
+      <y>714</y>
+      <w>1134</w>
       <h>140</h>
     </coordinates>
     <panel_attributes>WeightedJobScheduler
 --
 _- linkBestOption(_valueList : List&lt;Integer&gt;, _focusList : List&lt;WeightedJobSchedulable&gt;, _endIndex int)_
-_- generateMaxValueIndex(_valueList : List&lt;Integer&gt;) : Integer_
-_- generateWeightedSchedule(_focusList : List&lt;WeightedJobSchedulable&gt;, _maxIndex : Integer) : List_
-_+ weightedJobScheduling(_sortedSet : sortedSet&lt;WeightedJobSchedulable &gt;) : List_</panel_attributes>
+_- generateMaxValueIndex(_valueList : List&lt;Integer&gt;) : int_
+_- generateWeightedSchedule(_focusList : List&lt;WeightedJobSchedulable&gt;, _maxIndex : Integer) : List&lt;WeightedJobSchedulable&gt;_
+_+ weightedJobScheduling(_sortedSet : sortedSet&lt;WeightedJobSchedulable &gt;) : List&lt;WeightedJobSchedulable&gt;_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>322</x>
-      <y>602</y>
-      <w>308</w>
+      <x>420</x>
+      <y>966</y>
+      <w>420</w>
       <h>154</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
@@ -111,15 +111,15 @@ WeightedJobSchedulable
 --
 getValue() : Integer
 getLinkedObject() : WeightedJobSchedulable
-doesOverlap(Object o) : boolean
-linkObject(WeightedJobSchedulable o)</panel_attributes>
+doesOverlap(Object _otherObject) : boolean
+linkObject(WeightedJobSchedulable _newLink)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>742</y>
+      <x>630</x>
+      <y>1106</y>
       <w>42</w>
       <h>168</h>
     </coordinates>
@@ -129,8 +129,8 @@ linkObject(WeightedJobSchedulable o)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>574</y>
+      <x>630</x>
+      <y>938</y>
       <w>868</w>
       <h>336</h>
     </coordinates>
@@ -140,8 +140,8 @@ linkObject(WeightedJobSchedulable o)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>476</y>
+      <x>630</x>
+      <y>840</y>
       <w>42</w>
       <h>154</h>
     </coordinates>
@@ -151,8 +151,8 @@ linkObject(WeightedJobSchedulable o)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>504</y>
+      <x>630</x>
+      <y>868</y>
       <w>42</w>
       <h>126</h>
     </coordinates>
@@ -162,8 +162,8 @@ linkObject(WeightedJobSchedulable o)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>518</x>
-      <y>476</y>
+      <x>700</x>
+      <y>840</y>
       <w>798</w>
       <h>196</h>
     </coordinates>
